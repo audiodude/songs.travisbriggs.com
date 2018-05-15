@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>
+      Songs and Sounds by <a href="https://travisbriggs.com">Travis Briggs</a>
+    </h2>
+    <ul>
+    {% for song in songs %}
+        <li>
+            <a href="{{ url_for("song", path=song.path) }}">{{ song.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock content %}
