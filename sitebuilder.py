@@ -1,4 +1,5 @@
 import sys
+import os
 
 from flask import Flask, render_template
 from flask_flatpages import FlatPages
@@ -19,6 +20,7 @@ def index():
 @app.route('/<path:path>/')
 def song(path):
   song = songs.get_or_404(path)
+  song.src = '/static/' + os.path.basename(path) + '.mp3'
   return render_template('song.html', song=song)
 
 if __name__ == '__main__':

@@ -3,4 +3,5 @@
 {% block content %}
     <h2>{{ song.title }}</h2>
     {{ song.html | safe }}
+    <audio controls src="{{ song.src }}"></audio>
 {% endblock content %}
