@@ -15,6 +15,8 @@ freezer = Freezer(app)
 
 @app.route('/')
 def index():
+  for song in songs:
+    song.src = '/static/' + os.path.basename(song.path) + '.mp3'
   return render_template('index.html', songs=songs)
 
 @app.route('/<path:path>/')

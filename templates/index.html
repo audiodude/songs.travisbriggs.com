@@ -8,6 +8,7 @@
     {% for song in songs %}
         <li>
             <a href="{{ url_for("song", path=song.path) }}">{{ song.title }}</a>
+            <audio controls src="{{ song.src }}"></audio>
         </li>
     {% endfor %}
     </ul>
