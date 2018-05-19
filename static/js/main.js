@@ -17,6 +17,11 @@ $(function() {
 
   $('.player').each(function(i, player) {
     var song_id = $(player).attr('data-song-id');
+
+    player.addEventListener('ended', function() {
+      pause($(player).find('.play-button').get(0), player);
+    }, true);
+
     $(player).find('.play-button').click(function() {
       var player = $('#player-' + song_id).get(0)
       if ($.data(player, 'playing')) {
