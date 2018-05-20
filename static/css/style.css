@@ -45,6 +45,13 @@ ul {
   font-size: 1.8em;
 }
 
+.song .date {
+  color: #367f9d;
+  display: inline-block;
+  font-size: 1.25em;
+  margin-top: 4px;
+}
+
 .player {
   display: inline-block;
   width: 280px;

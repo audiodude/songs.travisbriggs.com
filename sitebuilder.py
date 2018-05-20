@@ -1,3 +1,4 @@
+from datetime import datetime
 import sys
 import os
 
@@ -19,7 +20,10 @@ def index():
     slug = os.path.basename(song.path)
     song.src = '/static/' + slug + '.mp3'
     song.slug = slug
-  return render_template('index.html', songs=songs)
+    song.dt = datetime.strptime(song.meta['date'], '%Y/%m/%d')
+
+  sorted_songs = sorted(list(songs), key=lambda song: song.dt, reverse=True)
+  return render_template('index.html', songs=sorted_songs)
 
 @app.route('/<path:path>/')
 def song(path):

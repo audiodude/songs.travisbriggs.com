@@ -23,6 +23,7 @@
   <li class = "song">
     <a class="title"
        href="{{ url_for("song", path=song.path) }}">{{song.title}}</a><br>
+    <span class="date">{{ song.dt.strftime('%b %d, %Y') }}</span><br>
     <span class="player" data-song-id="{{ song.slug }}">
       <button class="play-button">
         <i class="fas fa-play"></i>
