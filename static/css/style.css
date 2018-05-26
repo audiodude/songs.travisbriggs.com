@@ -13,8 +13,13 @@ a:visited {
 h1 {
   font-size: 2em;
   font-weight: bold;
+  font-family: 'Roboto', sans-serif;
   margin-top: 20px;
   text-align: center;
+}
+
+p {
+  font-family: 'Roboto', sans-serif;
 }
 
 ul {
@@ -22,7 +27,7 @@ ul {
   flex-wrap: wrap;
   justify-content: space-between;
   list-style: none;
-  margin: 20px 80px;
+  margin: 20px 5%;
 }
 
 .cc {
@@ -41,8 +46,16 @@ ul {
   width: 22%;
 }
 
+
+@media (max-width: 600px) {
+  .song {
+    width: 90%;
+  }
+}
+
 .song .title {
   font-size: 1.8em;
+  font-family: 'Oswald', sans-serif;
 }
 
 .song .date {
@@ -63,4 +76,47 @@ ul {
   border: none;
   color: #004c6d;
   font-size: 2.5em;
+}
+
+.cont {
+  display: flex;
+  flex-wrap: wrap;
+  justify-contents: space-around;
+  margin: 20px 40px;
+}
+
+.cont .single {
+  width: 380px;
+}
+
+.single .title,
+.faq h2,
+.goback a,
+.goback a:visited {
+  color: #efe5bf;
+  font-size: 28px;
+}
+
+.single .title {
+  font-family: 'Oswald', sans-serif;
+}
+
+.single audio {
+  margin-top: 10px;
+}
+
+.cont .description {
+  color: #004c6d;
+  font-size: 18px;
+  margin-top: 32px;
+  width: 400px;
+}
+
+.faq {
+  max-width: 780px;
+  margin: 20px 40px;
+}
+
+.goback {
+  margin-top: 20px;
 }

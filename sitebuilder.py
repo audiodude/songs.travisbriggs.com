@@ -29,7 +29,7 @@ def index():
 def song(path):
   song = songs.get_or_404(path)
   song.src = '/static/' + os.path.basename(path) + '.mp3'
-  return render_template('song.html', song=song)
+  return render_template('song.html', song=song, title=song.meta['title'])
 
 if __name__ == '__main__':
   if len(sys.argv) > 1 and sys.argv[1] == 'build':

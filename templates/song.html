@@ -1,7 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{ song.title }}</h2>
-    {{ song.html | safe }}
+<div class="cont">
+  <div class="single">
+    <h2 class="title">{{ song.title }}</h2>
     <audio controls src="{{ song.src }}"></audio>
+  </div>
+  <div class="description">
+    {{ song.html | safe }}
+  </div>
+</div>
+
+<div class="faq">
+  <h2>What is this site?</h2>
+  <p>
+    You're looking at a single song by <a href="https://travisbriggs.com">Travis Briggs</a> posted to his song and sounds website.
+  </p>
+  <p class="goback">
+    <a href="/">&lt;--- Go Back</a>
+  </p>
+</div>
 {% endblock content %}
