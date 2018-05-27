@@ -20,6 +20,7 @@ $(function() {
 
     player.addEventListener('ended', function() {
       pause($(player).find('.play-button').get(0), player);
+      player.currentTime = 0;
     }, true);
 
     $(player).find('.play-button').click(function() {
