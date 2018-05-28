@@ -78,6 +78,13 @@ ul {
   font-size: 2.5em;
 }
 
+.single .play-button {
+  background-color: transparent;
+  border: none;
+  color: #efe5bf;
+  font-size: 2.5em;
+}
+
 .cont {
   display: flex;
   flex-wrap: wrap;
@@ -89,12 +96,26 @@ ul {
   width: 380px;
 }
 
+.tags {
+  margin-top: 5px;
+}
+
+.tags .tag {
+  color: #004c6d;
+}
+
 .single .title,
 .faq h2,
 .goback a,
-.goback a:visited {
+.goback a:visited,
+.related h3 {
   color: #efe5bf;
+  font-family: 'Roboto', sans-serif;
   font-size: 28px;
+}
+
+.faq h2 {
+  margin-bottom: 5px;
 }
 
 .single .title {
@@ -113,10 +134,20 @@ ul {
 }
 
 .faq {
+  color: #004c6d;
   max-width: 780px;
   margin: 20px 40px;
 }
 
 .goback {
   margin-top: 20px;
+}
+
+.related {
+  margin: 20px 40px;
+}
+
+.related-hr {
+  color: #efe5bf;
+  margin: 20px 40px;
 }
