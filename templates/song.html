@@ -1,17 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
+<header class="single">
+<h1>
+  Songs and Sounds by <br><a href="https://travisbriggs.com">Travis Briggs</a>
+</h1>
+</header>
+
 <div class="cont">
   <div class="single">
     <h2 class="title">{{ song.title }}</h2>
-    <span class="player" data-song-id="{{ song.slug }}">
-      <button class="play-button">
-        <i class="fas fa-play"></i>
-        <i class="fas fa-pause" style="display: none;"></i>
-      </button>
-      <audio id="player-{{ song.slug }}" preload="none" src="{{ song.src }}">
-      </audio>
-    </span>
+    {% include 'player.html' %}
     <div class="tags">
       {% for tag in song.meta['tags'] %}
       <span class="tag">#{{ tag }}</span>
@@ -27,11 +26,9 @@
   <h2>What is this site?</h2>
   <p>
     You're looking at a single song by <a href="https://travisbriggs.com">Travis
-    Briggs</a> posted to his song and sounds website. You can browse other songs
-    that are similar below, or go back to the main song listing.
-  </p>
-  <p class="goback">
-    <a href="/">&lt;--- Go Back</a>
+    Briggs</a> posted to his song and sounds website. Press the play button to
+    listen to the song. You can browse other songs that are similar below, or
+    <a href="/">go back</a> to the main song listing.
   </p>
 </div>
 
@@ -42,19 +39,7 @@
   <h3>Other songs tagged '{{ tag }}'</h3>
   <ul>
     {% for song in song.related[tag] %}
-      <li class="song">
-        <a class="title"
-           href="{{ url_for("song", path=song.path) }}">{{song.title}}</a><br>
-        <span class="date">{{ song.dt.strftime('%b %d, %Y') }}</span><br>
-        <span class="player" data-song-id="{{ song.slug }}">
-          <button class="play-button">
-            <i class="fas fa-play"></i>
-            <i class="fas fa-pause" style="display: none;"></i>
-          </button>
-          <audio id="player-{{ song.slug }}" preload="none" src="{{ song.src }}">
-          </audio>
-        </span>
-      </li>
+      {% include 'song_block.html' %}
     {% endfor %}
   </ul>
 </div>

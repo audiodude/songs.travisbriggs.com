@@ -8,12 +8,27 @@ footer {
   padding: 20px 10px;
 }
 
+header.single,
+footer.single {
+  background-color: #da5c28;
+}
+
 a {
   color: #efe5bf;
 }
 
 a:visited {
   color: #a8a186;
+}
+
+header.single a,
+.faq a {
+  color: #bbb;
+}
+
+header.single a:visited,
+.faq a:visited {
+  color: #555;
 }
 
 h1 {
@@ -127,21 +142,27 @@ ul {
   width: 20%;
 }
 
-.single .play-button {
-  background-color: transparent;
-  border: none;
-  color: #efe5bf;
-}
-
 .cont {
+  background-color: #f0f0fb;
+  border-left: 10px solid transparent;
+  border-radius: 8px;
+  box-shadow: 2px 2px 14px 4px #ddd;
   display: flex;
   flex-wrap: wrap;
-  justify-contents: space-around;
+  justify-content: space-around;
   margin: 20px 40px;
+  max-width: 60%;
+  padding: 20px;
+}
+
+@media (max-width: 600px) {
+  .cont {
+    max-width: 90%;
+  }
 }
 
 .cont .single {
-  width: 380px;
+  width: 30%;
 }
 
 .tags {
@@ -149,15 +170,13 @@ ul {
 }
 
 .tags .tag {
-  color: #004c6d;
+  color: #444;
 }
 
 .single .title,
 .faq h2,
-.goback a,
-.goback a:visited,
 .related h3 {
-  color: #efe5bf;
+  color: #da5c28;
   font-family: 'Roboto', sans-serif;
   font-size: 28px;
 }
@@ -175,20 +194,19 @@ ul {
 }
 
 .cont .description {
-  color: #004c6d;
-  font-size: 18px;
-  margin-top: 32px;
-  width: 400px;
+  color: #444;
+  font-size: 1.1em;
+  line-height: 1.2em;
+  margin-top: 40px;
+  width: 60%;
 }
 
 .faq {
-  color: #004c6d;
-  max-width: 780px;
+  color: #444;
+  font-size: 1.1em;
+  line-height: 1.2em;
+  max-width: 60%;
   margin: 20px 40px;
-}
-
-.goback {
-  margin-top: 20px;
 }
 
 .related {
@@ -196,6 +214,6 @@ ul {
 }
 
 .related-hr {
-  color: #efe5bf;
+  color: #da5c28;
   margin: 20px 40px;
 }

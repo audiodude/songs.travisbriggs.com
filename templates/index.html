@@ -9,28 +9,7 @@
 
 <ul>
 {% for song in songs %}
-  <li class="song" style="border-left-color: {{ song.color }}">
-    <a class="title"
-       href="{{ url_for("song", path=song.path) }}">{{song.title}}</a><br>
-    <span class="date">{{ song.dt.strftime('%b %d, %Y') }}</span><br>
-    {% include 'player.html' %}
-  </li>
+  {% include 'song_block.html' %}
 {% endfor %}
 </ul> 
-
-<footer>
-<p class="footer-text cc">
-  <a id="cc-logo" rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
-    <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png"/>
-  </a>
-  This site and all of its contents, including audio files, are licensed under
-  a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
-    Creative Commons Attribution -
-    NonCommercial 4.0 International License</a>.
-</p>
-
-<p class="footer-text">
-  The source code for this site is <a href="https://github.com/audiodude/songs.travisbriggs.com">available on Github.</a>
-</p>
-</footer>
 {% endblock content %}
