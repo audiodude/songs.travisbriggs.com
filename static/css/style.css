@@ -48,21 +48,35 @@ ul {
 }
 
 .song {
-  background-color: #efe5bf;
-  border: 1px solid black;
-  border-radius: 5px;
-  margin: 10px auto;
+  background-color: #f0f0fb;
+  border-left: 10px solid transparent;
+  border-radius: 8px;
+  box-shadow: 2px 2px 14px 4px #ddd;
+  flex-basis: 16%;
+  margin: 20px 0.8%;
   padding: 10px;
   position: relative;
-  width: 22%;
 }
 
+
+@media (max-width: 1600px) {
+  .song {
+    flex-basis: 20%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .song {
+    flex-basis: 25%;
+  }
+}
 
 @media (max-width: 600px) {
   .song {
-    width: 90%;
+    flex-basis: 90%;
   }
 }
+
 
 .song a,
 .song a:visited {
@@ -70,14 +84,13 @@ ul {
 }
 
 .song .title {
-  font-size: 1.8em;
+  font-size: 1.6em;
   font-family: 'Oswald', sans-serif;
 }
 
 .song .date {
   color: #444;
   display: inline-block;
-  font-size: 1.25em;
   margin-top: 4px;
 }
 
@@ -97,8 +110,21 @@ ul {
 }
 
 .player .transport {
-  background-color: #aaa;
+  background-color: #ccc;
+  display: inline-block;
+  height: 6px;
+  top: -6px;
+  position: relative;
   width: 100%;
+}
+
+.player .progress {
+  background-color: #fff;
+  display: inline-block;
+  height: 6px;
+  left: 0;
+  position: absolute;
+  width: 20%;
 }
 
 .single .play-button {
