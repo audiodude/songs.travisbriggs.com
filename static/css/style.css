@@ -139,7 +139,14 @@ ul {
   height: 6px;
   left: 0;
   position: absolute;
-  width: 20%;
+  width: 0;
+  transition: width .25s linear;
+}
+
+.player .times {
+  display: flex;
+  font-size: .8em;
+  justify-content: space-between;
 }
 
 .cont {
