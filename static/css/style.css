@@ -1,21 +1,27 @@
 body {
-  background-color: #64b5ce;
+  background-color: #eee;
+}
+
+header,
+footer {
+  background-color: #0c728c;
+  padding: 20px 10px;
 }
 
 a {
-  color: #367f9d;
+  color: #efe5bf;
 }
 
 a:visited {
-  color: #004c6d;
+  color: #a8a186;
 }
 
 h1 {
+  color: #fff;
   font-size: 2em;
-  font-weight: bold;
   font-family: 'Roboto', sans-serif;
-  margin-top: 20px;
-  text-align: center;
+  line-height: 1.2em;
+  margin: 20px;
 }
 
 p {
@@ -30,10 +36,15 @@ ul {
   margin: 20px 5%;
 }
 
-.cc {
+.footer-text {
+  color: #fff;
   max-width: 600px;
-  margin: 20px auto;
-  text-align: center;
+  margin: 20px;
+}
+
+#cc-logo {
+  float: left;
+  margin-right: 10px;
 }
 
 .song {
@@ -53,13 +64,18 @@ ul {
   }
 }
 
+.song a,
+.song a:visited {
+  color: #444;
+}
+
 .song .title {
   font-size: 1.8em;
   font-family: 'Oswald', sans-serif;
 }
 
 .song .date {
-  color: #367f9d;
+  color: #444;
   display: inline-block;
   font-size: 1.25em;
   margin-top: 4px;
@@ -67,22 +83,28 @@ ul {
 
 .player {
   display: inline-block;
-  width: 280px;
+  box-sizing: border-box;
+  width: 100%;
   margin-top: 10px;
 }
 
 .player .play-button {
   background-color: transparent;
   border: none;
-  color: #004c6d;
-  font-size: 2.5em;
+  color: #444;
+  font-size: 1.2em;
+  margin-left: -8px;
+}
+
+.player .transport {
+  background-color: #aaa;
+  width: 100%;
 }
 
 .single .play-button {
   background-color: transparent;
   border: none;
   color: #efe5bf;
-  font-size: 2.5em;
 }
 
 .cont {
