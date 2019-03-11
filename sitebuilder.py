@@ -30,7 +30,7 @@ def _annotate(song, i):
   if hasattr(song, 'slug'):
     return
   slug = os.path.basename(song.path)
-  song.src = '/static/' + slug + '.mp3'
+  song.src = '/static/mp3/' + slug + '.mp3'
   song.slug = slug
   song.dt = datetime.strptime(song.meta['date'], '%Y/%m/%d')
   _add_color(song, i)
@@ -65,7 +65,7 @@ def song(path):
         if s.slug != song.slug:
           related[tag].append(s)
   song.related = related
-  song.src = '/static/' + os.path.basename(path) + '.mp3'
+  song.src = '/static/mp3/' + os.path.basename(path) + '.mp3'
   return render_template('song.html', song=song, title=song.meta['title'])
 
 if __name__ == '__main__':
