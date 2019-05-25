@@ -1,7 +1,7 @@
 title: Dream Girl mkII
 date: 2017/04/27
 duration: 153666
-tags: ['"male', 'voclas"', '"no', 'drums"', '"original', '"', 'unfinished']
+tags: ['male', 'voclas"', 'no.drums', '"original.', 'unfinished']
 
 So go listen to https://soundcloud.com/travis-briggs/dream-girl
 
