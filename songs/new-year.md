@@ -1,7 +1,7 @@
 title: New Year
 date: 2017/12/30
 duration: 146900
-tags: ['songaday', 'songaday2018', 'demo', 'original']
+tags: ['songaday', 'male.vocals', 'demo', 'original']
 
 My first track for Song a Day in 2018. https://www.songaday2018.com
 
