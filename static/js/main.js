@@ -28,14 +28,25 @@ $(function() {
     return minutes + ':' + secsRem;
   }
 
-  // Build the tag cloud on the main page
-  $.fn.tagcloud.defaults = {
-    size: {start: 12, end: 18, unit: 'pt'},
-    color: {start: '#cde', end: '#f52'}
-  };
-  $(function () {
-    window.console.log($('.tags .tag'));
-    $('.tags .tag').tagcloud();
+  $('.song').each(function(i, song) {
+    $(song).data('tagarray', $(song).data('tags').split(';'));
+  });
+
+  $('.tag').each(function(i, tag) {
+    $(tag).click(function() {
+      tagdata = $(tag).data('tag');
+      window.console.log($(tag).data('tag'));
+      $('.song').each(function(i, song) {
+        var visible = (
+          $(song).data('tagarray').indexOf(tagdata) != -1 ||
+          tagdata == '__all__');
+        $(song).toggle(visible);
+      });
+
+      var allShowing = tagdata == '__all__';
+      $('#cur-tag-banner').toggle(!allShowing);
+      $('#cur-tag').text(tagdata);
+    });
   });
 
   $('.player').each(function(i, player) {

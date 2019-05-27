@@ -8,10 +8,15 @@
 </header>
 
 <ul class="tags">
+  <li class="tag" data-tag="__all__">Show All</li>
 {% for tag in tags %}
-  <li class="tag">{{tag}}</li>
+  <li class="tag" data-tag="{{tag}}">{{tag}}</li>
 {% endfor %}
 </ul>
+
+<h2 id="cur-tag-banner" style="display: none;">
+  Showing songs tagged <i id="cur-tag"></i>
+</h2>
 
 <ul class="songs">
 {% for song in songs %}

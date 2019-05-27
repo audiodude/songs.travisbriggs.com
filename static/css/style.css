@@ -39,6 +39,17 @@ h1 {
   margin: 20px;
 }
 
+h2 {
+  font-size: 1.6em;
+  font-family: 'Roboto', sans-serif;
+  margin: 40px;
+  margin-left: 80px;
+}
+
+h2 i {
+  font-style: italic;
+}
+
 p {
   font-family: 'Roboto', sans-serif;
 }
@@ -71,6 +82,7 @@ ul.tags {
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
+  cursor: pointer;
   display: inline-block;
   flex-basis: 8%;
   padding: 4px;
