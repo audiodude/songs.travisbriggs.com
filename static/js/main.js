@@ -28,6 +28,16 @@ $(function() {
     return minutes + ':' + secsRem;
   }
 
+  // Build the tag cloud on the main page
+  $.fn.tagcloud.defaults = {
+    size: {start: 12, end: 18, unit: 'pt'},
+    color: {start: '#cde', end: '#f52'}
+  };
+  $(function () {
+    window.console.log($('.tags .tag'));
+    $('.tags .tag').tagcloud();
+  });
+
   $('.player').each(function(i, player) {
     var song_id = $(player).attr('data-song-id');
     var audioPlayer = $('#player-' + song_id).get(0);

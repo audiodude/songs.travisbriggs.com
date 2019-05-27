@@ -49,7 +49,14 @@ def index():
   for i, song in enumerate(sorted_songs):
     _add_color(song, i)
 
-  return render_template('index.html', songs=sorted_songs)
+  tags = set()
+  for song in sorted_songs:
+    for tag in song.meta['tags']:
+      tags.add(tag)
+
+  tags = sorted(list(tags))
+
+  return render_template('index.html', songs=sorted_songs, tags=tags)
 
 @app.route('/<path:path>/')
 def song(path):

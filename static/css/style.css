@@ -62,6 +62,26 @@ ul {
   margin-right: 10px;
 }
 
+ul.tags {
+  display: block;
+  margin-top: 20px;
+}
+
+.tag {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: inline-block;
+  flex-basis: 8%;
+  padding: 4px;
+}
+
+@media (max-width: 900px) {
+  ul.tags {
+    display: none;
+  }
+}
+
 .song {
   background-color: #f0f0fb;
   border-left: 10px solid transparent;

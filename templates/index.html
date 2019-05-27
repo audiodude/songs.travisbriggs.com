@@ -7,7 +7,13 @@
 </h1>
 </header>
 
-<ul>
+<ul class="tags">
+{% for tag in tags %}
+  <li class="tag">{{tag}}</li>
+{% endfor %}
+</ul>
+
+<ul class="songs">
 {% for song in songs %}
   {% include 'song_block.html' %}
 {% endfor %}
