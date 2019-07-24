@@ -21,6 +21,15 @@ a:visited {
   color: #a8a186;
 }
 
+.description a {
+  color: #da5c28;
+}
+
+
+.description a:visited {
+  color: #da7c66;
+}
+
 header.single a,
 .faq a {
   color: #bbb;
