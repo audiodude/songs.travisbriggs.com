@@ -3,7 +3,9 @@
     <i class="fas fa-play"></i>
     <i class="fas fa-pause" style="display: none;"></i>
   </button>
-  <span class="transport"><span class="progress"></span></span>
+  <span class="transport">
+    <span class="progress"></span>
+  </span>
   <audio id="player-{{ song.slug }}" preload="metadata" src="{{ song.src }}">
   </audio>
   <div class="times">

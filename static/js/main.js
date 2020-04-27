@@ -72,6 +72,15 @@ $(function() {
       updateDuration(player, audioPlayer.duration);
     });
 
+    $(player).find('.transport').click(function(evt) {
+      if (!$.data(audioPlayer, 'playing')) {
+        return;
+      }
+      var width = $(evt.target).closest('.transport').get(0).clientWidth;
+      var fraction = evt.offsetX / width;
+      audioPlayer.currentTime = fraction * audioPlayer.duration;
+    });
+
     $(player).find('.play-button').click(function() {
       if ($.data(audioPlayer, 'playing')) {
         pause(this, audioPlayer);
