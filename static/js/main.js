@@ -93,7 +93,7 @@ $(function() {
         var player = $(duration).closest('.player');
         var song_id = $(player).attr('data-song-id');
         var audioPlayer = $('#player-' + song_id).get(0);
-        
+
         if (audioPlayer.duration) {
           $(duration).text(formatTime(audioPlayer.duration));
         }

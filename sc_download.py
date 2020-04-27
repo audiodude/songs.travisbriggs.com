@@ -4,12 +4,15 @@ import re
 import requests
 import soundcloud
 
+
 def main():
   # create a client object with your app credentials
   client = soundcloud.Client(client_id=os.environ['SC_CLIENT_ID'])
 
   # find all sounds of buskers licensed under 'creative commons share alike'
-  tracks = client.get('/tracks', user_id='36111', limit=200, 
+  tracks = client.get('/tracks',
+                      user_id='36111',
+                      limit=200,
                       linked_partitioning=1)
 
   for track in tracks.collection:
@@ -35,6 +38,7 @@ def main():
     else:
       print('WARNING: could not download '
             'http://soundcloud.com/travis-briggs/%s' % track.permalink)
+
 
 if __name__ == '__main__':
   main()

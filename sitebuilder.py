@@ -1,30 +1,28 @@
-from collections import defaultdict
-from datetime import datetime
+import os
 import random
 import sys
-import os
+from collections import defaultdict
+from datetime import datetime
 
 from flask import Flask, render_template
 from flask_flatpages import FlatPages
 from flask_frozen import Freezer
 
 app = Flask(__name__)
-app.config.update(
-  FLATPAGES_ROOT='songs',
-  FLATPAGES_EXTENSION = '.md'
-)
+app.config.update(FLATPAGES_ROOT='songs', FLATPAGES_EXTENSION='.md')
 songs = FlatPages(app)
 freezer = Freezer(app)
 
 song_colors = [
-  '#FD7632',
-  '#477C90',
-  '#4B0082',
-  '#CD4640',
-  '#85D817',
-  '#DDB8C7',
-  '#2AC8C6',
+    '#FD7632',
+    '#477C90',
+    '#4B0082',
+    '#CD4640',
+    '#85D817',
+    '#DDB8C7',
+    '#2AC8C6',
 ]
+
 
 def _annotate(song, i):
   if hasattr(song, 'slug'):
@@ -35,8 +33,10 @@ def _annotate(song, i):
   song.dt = datetime.strptime(song.meta['date'], '%Y/%m/%d')
   _add_color(song, i)
 
+
 def _add_color(song, i):
   song.color = song_colors[i % len(song_colors)]
+
 
 @app.route('/')
 def index():
@@ -58,6 +58,7 @@ def index():
 
   return render_template('index.html', songs=sorted_songs, tags=tags)
 
+
 @app.route('/<path:path>/')
 def song(path):
   related = defaultdict(list)
@@ -74,6 +75,7 @@ def song(path):
   song.related = related
   song.src = '/static/mp3/' + os.path.basename(path) + '.mp3'
   return render_template('song.html', song=song, title=song.meta['title'])
+
 
 if __name__ == '__main__':
   if len(sys.argv) > 1 and sys.argv[1] == 'build':
