@@ -43,7 +43,8 @@ def index():
   for i, song in enumerate(songs):
     _annotate(song, i)
 
-  sorted_songs = sorted(list(songs), key=lambda song: song.dt, reverse=True)
+  filtered_songs = list(s for s in songs if not s.meta.get('hidden'))
+  sorted_songs = sorted(filtered_songs, key=lambda s: s.dt, reverse=True)
 
   # Re-add the colors once the songs are sorted.
   for i, song in enumerate(sorted_songs):
@@ -70,7 +71,7 @@ def song(path):
     for i, s in enumerate(songs):
       if tag in s.meta['tags']:
         _annotate(s, i)
-        if s.slug != song.slug:
+        if s.slug != song.slug and not s.meta.get('hidden'):
           related[tag].append(s)
   song.related = related
   song.src = '/static/mp3/' + os.path.basename(path) + '.mp3'
