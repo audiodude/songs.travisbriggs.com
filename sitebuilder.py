@@ -78,6 +78,13 @@ def song(path):
   return render_template('song.html', song=song, title=song.meta['title'])
 
 
+@freezer.register_generator
+def hidden_songs():
+  for song in songs:
+    if song.meta.get('hidden'):
+      yield ('song', {'path': os.path.basename(song.path)})
+
+
 if __name__ == '__main__':
   if len(sys.argv) > 1 and sys.argv[1] == 'build':
     freezer.freeze()
