@@ -25,7 +25,6 @@ a:visited {
   color: #da5c28;
 }
 
-
 .description a:visited {
   color: #da7c66;
 }
@@ -38,6 +37,10 @@ header.single a,
 header.single a:visited,
 .faq a:visited {
   color: #555;
+}
+
+em {
+  font-style: italic;
 }
 
 h1 {
@@ -114,7 +117,6 @@ ul.tags {
   position: relative;
 }
 
-
 @media (max-width: 1600px) {
   .song {
     flex-basis: 20%;
@@ -132,7 +134,6 @@ ul.tags {
     flex-basis: 90%;
   }
 }
-
 
 .song a,
 .song a:visited {
@@ -181,12 +182,12 @@ ul.tags {
   left: 0;
   position: absolute;
   width: 0;
-  transition: width .25s linear;
+  transition: width 0.25s linear;
 }
 
 .player .times {
   display: flex;
-  font-size: .8em;
+  font-size: 0.8em;
   justify-content: space-between;
 }
 
@@ -229,8 +230,14 @@ ul.tags {
   font-size: 28px;
 }
 
+.single .title,
 .faq h2 {
-  margin-bottom: 5px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.faq h2 {
+  margin-bottom: 10px;
 }
 
 .single .title {
