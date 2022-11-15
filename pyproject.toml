@@ -10,7 +10,6 @@ python = "^3.8"
 flask = "^1.1.2"
 flask-flatpages = "^0.7.2"
 frozen-flask = "^0.15"
-soundcloud = "^0.5.0"
 urllib3 = "^1.26.5"
 
 [tool.poetry.dev-dependencies]
