@@ -1,6 +1,5 @@
 # usage:
-# $ poetry shell
-# $ python track_length.py static/mp3/<track.mp3>
+# $ poetry run python track_length.py static/mp3/<filename>.mp3
 import sys
 
 from mutagen.mp3 import MP3
