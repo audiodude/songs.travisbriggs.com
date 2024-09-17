@@ -38,10 +38,17 @@ $ ./id3.sh 'Song title' static/mp3/song_title.mp3
 ## Previewing the site
 
 As stated, the site "runs" on Flask, and can be previewed (or even potentially deployed) as a Flask powered
-web app. To do so, run the following:
+web app. To do so, first install the dependencies using `pipenv`. You will need the `pipenv` library
+installed in your global Python libraries.
 
 ```bash
-$ FLASK_DEBUG=1 FLASK_APP=sitebuilder flask run
+pipenv install
+```
+
+Then to preview the site run:
+
+```bash
+pipenv run flask --debug -A sitebuilder run
 ```
 
 Then visit the url printed, probably `http://localhost:5000`.
@@ -51,13 +58,13 @@ Then visit the url printed, probably `http://localhost:5000`.
 The site is currently hosted for free as a static site on Netlify. To deploy, first build the site:
 
 ```bash
-$ python sitebuilder.py build
+pipenv run python sitebuilder.py build
 ```
 
 Then use the Netlify CLI to deploy:
 
 ```bash
-$ netlify deploy -d build --prod
+netlify deploy -d build --prod
 ```
 
 You might have to log in to Netlify or otherwise provide credentials/pick a site.

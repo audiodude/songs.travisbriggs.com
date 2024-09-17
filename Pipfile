@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "~=2.3.3"
+flask-flatpages = "~=0.7.2"
+frozen-flask = "~=0.15"
+urllib3 = "~=1.26.5"
+mutagen = "~=1.46.0"
+eyed3 = "~=0.9.7"
+
+[dev-packages]
+pre-commit = "~=2.3.0"
+
+[requires]
+python_version = "3.12"
