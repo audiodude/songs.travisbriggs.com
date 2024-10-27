@@ -10,6 +10,8 @@ frozen-flask = "~=0.15"
 urllib3 = "~=1.26.5"
 mutagen = "~=1.46.0"
 eyed3 = "~=0.9.7"
+requests = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 pre-commit = "~=2.3.0"
