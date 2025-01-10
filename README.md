@@ -25,14 +25,22 @@ To get the track length of the song (which is specified in milliseconds in the f
 not actually used anywhere in the site), use the following commands:
 
 ```bash
-$ python track_length.py static/mp3/<song_title.mp3>
+python track_length.py static/mp3/<song_title.mp3>
 ```
 
 To add ID3 tags to songs, in case anyone ever downloads them (also not used anywhere in the site), use the
 `id3.sh` script:
 
 ```bash
-$ ./id3.sh 'Song title' static/mp3/song_title.mp3
+./id3.sh 'Song title' static/mp3/song_title.mp3
+```
+
+## Installing the development version
+
+The project uses Poetry. Use the following command:
+
+```bash
+poetry install
 ```
 
 ## Previewing the site
@@ -42,13 +50,7 @@ web app. To do so, first install the dependencies using `pipenv`. You will need 
 installed in your global Python libraries.
 
 ```bash
-pipenv install
-```
-
-Then to preview the site run:
-
-```bash
-pipenv run flask --debug -A sitebuilder run
+poetry run flask --debug -A sitebuilder run
 ```
 
 Then visit the url printed, probably `http://localhost:5000`.
@@ -58,7 +60,7 @@ Then visit the url printed, probably `http://localhost:5000`.
 The site is currently hosted for free as a static site on Netlify. To deploy, first build the site:
 
 ```bash
-pipenv run python sitebuilder.py build
+poetry run python sitebuilder.py build
 ```
 
 Then use the Netlify CLI to deploy:
@@ -71,8 +73,3 @@ You might have to log in to Netlify or otherwise provide credentials/pick a site
 
 Note the `--prod` flag will clobber production and not give you a chance to preview the deployment, but assuming
 you already previewed locally on the Flask server, this shouldn't be a problem.
-
-# Your version
-
-If you'd like to make your own version of a site based on this one, I've already done the work of
-cleaning out the personal content. That version is [on Github as well](https://github.com/audiodude/rainfall).
