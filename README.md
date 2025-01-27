@@ -25,14 +25,14 @@ To get the track length of the song (which is specified in milliseconds in the f
 not actually used anywhere in the site), use the following commands:
 
 ```bash
-python track_length.py static/mp3/<song_title.mp3>
+pipenv run python track_length.py static/mp3/<song_title.mp3>
 ```
 
 To add ID3 tags to songs, in case anyone ever downloads them (also not used anywhere in the site), use the
 `id3.sh` script:
 
 ```bash
-./id3.sh 'Song title' static/mp3/song_title.mp3
+pipenv run ./id3.sh 'Song title' static/mp3/song_title.mp3
 ```
 
 ## Installing the development version
