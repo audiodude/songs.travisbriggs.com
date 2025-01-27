@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 flask = "~=3.0.0"
 flask-flatpages = "~=0.7.2"
-frozen-flask = "~=0.15"
+Frozen-Flask = "~=1.0.2"
 urllib3 = "~=1.26.5"
 mutagen = "~=1.46.0"
 eyed3 = "~=0.9.7"
