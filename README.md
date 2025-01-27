@@ -37,10 +37,10 @@ pipenv run ./id3.sh 'Song title' static/mp3/song_title.mp3
 
 ## Installing the development version
 
-The project uses Poetry. Use the following command:
+The project uses pipenv, with an associated Pipfile. Use the following command:
 
 ```bash
-poetry install
+pipenv install
 ```
 
 ## Previewing the site
@@ -50,7 +50,7 @@ web app. To do so, first install the dependencies using `pipenv`. You will need 
 installed in your global Python libraries.
 
 ```bash
-poetry run flask --debug -A sitebuilder run
+pipenv run flask --debug -A sitebuilder run
 ```
 
 Then visit the url printed, probably `http://localhost:5000`.
@@ -60,7 +60,7 @@ Then visit the url printed, probably `http://localhost:5000`.
 The site is currently hosted for free as a static site on Netlify. To deploy, first build the site:
 
 ```bash
-poetry run python sitebuilder.py build
+pipenv run python sitebuilder.py build
 ```
 
 Then use the Netlify CLI to deploy:
