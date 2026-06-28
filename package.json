@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "migrate": "node scripts/migrate.mjs",
     "add-song": "node --env-file-if-exists=.env scripts/add-song.mjs",
-    "check-assets": "node scripts/check-assets.mjs"
+    "check-assets": "node scripts/check-assets.mjs",
+    "recalc-durations": "node scripts/recalc-durations.mjs"
   },
   "keywords": [],
   "author": "",
