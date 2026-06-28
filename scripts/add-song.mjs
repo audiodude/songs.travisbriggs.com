@@ -4,10 +4,10 @@
 //
 // Usage:
 //   pnpm add-song <file.mp3> [--slug s] [--title t] [--date YYYY-MM-DD] [--no-upload]
-import { access, mkdir, writeFile } from 'node:fs/promises';
+import { access, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { parseFile } from 'music-metadata';
-import { stringify } from 'yaml';
+import { parse, stringify } from 'yaml';
 import { generatePeaks } from './peaks.mjs';
 import { uploadToR2 } from './r2.mjs';
 
@@ -67,10 +67,25 @@ async function main() {
   const peaks = await generatePeaks(mp3, 72);
   await writeFile(path.join('public/peaks', `${slug}.json`), JSON.stringify(peaks));
 
+  // Idempotent: if the song already exists, preserve its metadata (title, date,
+  // tags, hidden, note) and only refresh the duration. Explicit --title/--date
+  // still override. New songs get a fresh scaffold.
   await mkdir('src/content/songs', { recursive: true });
   const yamlPath = path.join('src/content/songs', `${slug}.yaml`);
   const existed = await fileExists(yamlPath);
-  await writeFile(yamlPath, stringify({ title, date, duration, tags: [], hidden: false, note: '' }));
+  let data;
+  if (existed) {
+    data = parse(await readFile(yamlPath, 'utf8')) || {};
+    data.duration = duration;
+    if (args.title) data.title = title;
+    if (args.date) data.date = date;
+    data.tags ??= [];
+    data.hidden ??= false;
+    data.note ??= '';
+  } else {
+    data = { title, date, duration, tags: [], hidden: false, note: '' };
+  }
+  await writeFile(yamlPath, stringify(data));
 
   if (args.noUpload) {
     console.log('• skipped R2 upload (--no-upload)');
@@ -79,8 +94,8 @@ async function main() {
     console.log(`↑ uploaded ${slug}.mp3 to R2`);
   }
 
-  console.log(`✓ added "${title}" [${slug}] — ${Math.round(duration / 1000)}s, ${peaks.length} peaks`);
-  if (existed) console.log('  ⚠ overwrote an existing content file for this slug');
+  console.log(`✓ ${existed ? 'updated' : 'added'} "${data.title}" [${slug}] — ${Math.round(duration / 1000)}s, ${peaks.length} peaks`);
+  if (existed) console.log('  (existing note/tags/date preserved)');
   console.log('  next: pnpm dev → http://localhost:4321/keystatic/ to write the note + tags');
 }
 

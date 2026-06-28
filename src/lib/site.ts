@@ -7,6 +7,7 @@ export const BLURB =
 
 export const SOCIAL = {
   site: 'https://travisbriggs.com',
+  dangerThirdRail: 'https://dangerthirdrail.com',
   mastodon: 'https://sfba.social/@audiodude',
   github: 'https://github.com/audiodude/songs2.travisbriggs.com',
 };
@@ -28,6 +29,7 @@ export function navLinks(active: 'songs' | null = null): NavLink[] {
       current: active === 'songs',
     },
     { label: 'travisbriggs.com ↗', href: SOCIAL.site, external: true },
+    { label: 'Danger Third Rail ↗', href: SOCIAL.dangerThirdRail, external: true },
     { label: 'Mastodon ↗', href: SOCIAL.mastodon, external: true },
     { label: 'GitHub ↗', href: SOCIAL.github, external: true },
   ];

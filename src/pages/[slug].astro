@@ -98,7 +98,9 @@ const externals = [
       <div class="prevnext" style="display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:30px var(--pad) 40px;">
         {nb.older ? (
           <a href={`/${nb.older.slug}/`} class="pn-card" style="display:flex; align-items:center; gap:14px; background:#1b232f; border:1px solid var(--border); border-radius:8px; padding:16px 18px; text-decoration:none; transition:border-color .15s;">
-            <span style="width:42px; height:42px; flex:0 0 42px; border-radius:50%; border:1px solid var(--border-strong); display:flex; align-items:center; justify-content:center; color:var(--chip-text); font-size:20px; font-weight:700;">←</span>
+            <span class="pn-arrow" style="width:42px; height:42px; flex:0 0 42px; border-radius:50%; border:1px solid var(--border-strong); display:flex; align-items:center; justify-content:center; color:var(--chip-text);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="20" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </span>
             <span style="min-width:0;">
               <span style="display:block; font:700 10px/1 var(--font-mono); color:var(--faint); letter-spacing:.12em; text-transform:uppercase;">Older</span>
               <span style="display:block; font-family:var(--font-display); font-weight:700; font-size:18px; color:var(--hi); margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{nb.older.title}</span>
@@ -111,7 +113,9 @@ const externals = [
               <span style="display:block; font:700 10px/1 var(--font-mono); color:var(--faint); letter-spacing:.12em; text-transform:uppercase;">Newer</span>
               <span style="display:block; font-family:var(--font-display); font-weight:700; font-size:18px; color:var(--hi); margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{nb.newer.title}</span>
             </span>
-            <span style="width:42px; height:42px; flex:0 0 42px; border-radius:50%; border:1px solid var(--border-strong); display:flex; align-items:center; justify-content:center; color:var(--chip-text); font-size:20px; font-weight:700;">→</span>
+            <span class="pn-arrow" style="width:42px; height:42px; flex:0 0 42px; border-radius:50%; border:1px solid var(--border-strong); display:flex; align-items:center; justify-content:center; color:var(--chip-text);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </span>
           </a>
         ) : <span></span>}
       </div>
@@ -134,6 +138,7 @@ const externals = [
   .dl-btn:hover { background: var(--accent-deep); }
   .copy-btn:hover { border-color: var(--accent-light); color: var(--text); }
   .pn-card:hover { border-color: var(--accent) !important; }
+  .pn-card:hover .pn-arrow { border-color: var(--accent); color: var(--accent-light); }
   .note-body { font-size: 17px; line-height: 1.7; color: var(--chip-text); max-width: 62ch; }
   .note-body :global(p) { margin: 0 0 1em; }
   .note-body :global(a) { color: var(--accent-light); }
