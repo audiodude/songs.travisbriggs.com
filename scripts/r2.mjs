@@ -1,26 +1,27 @@
-import { readFile } from 'node:fs/promises';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { spawnSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 
-/** Build an S3 client pointed at the Cloudflare R2 endpoint. */
-export function r2Client() {
-  const { R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY } = process.env;
-  if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY) {
-    throw new Error('Missing R2 credentials (R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY). See .env.example.');
+const DEFAULT_BUCKET = 'songs-travisbriggs-audio';
+const DEFAULT_ACCOUNT = '059181f68081f9c0fb55c5c77a969c11';
+
+/**
+ * Upload a local file to the R2 bucket under `key`, via wrangler. Uses the
+ * Cloudflare API token from the environment (CLOUDFLARE_API_TOKEN or CF_API_TOKEN,
+ * the latter lives in ~/.secrets). No separate R2 S3 credentials needed.
+ */
+export function uploadToR2(localPath, key, contentType = 'audio/mpeg') {
+  const bucket = process.env.R2_BUCKET || DEFAULT_BUCKET;
+  const token = process.env.CLOUDFLARE_API_TOKEN || process.env.CF_API_TOKEN;
+  const account = process.env.CLOUDFLARE_ACCOUNT_ID || DEFAULT_ACCOUNT;
+  if (!token) {
+    throw new Error('Missing CLOUDFLARE_API_TOKEN / CF_API_TOKEN (source ~/.secrets or set it in .env).');
   }
-  return new S3Client({
-    region: 'auto',
-    endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-    credentials: { accessKeyId: R2_ACCESS_KEY_ID, secretAccessKey: R2_SECRET_ACCESS_KEY },
-  });
-}
-
-/** Upload a local file to the R2 bucket under `key`. */
-export async function uploadToR2(localPath, key, contentType = 'audio/mpeg') {
-  const bucket = process.env.R2_BUCKET;
-  if (!bucket) throw new Error('Missing R2_BUCKET. See .env.example.');
-  const body = await readFile(localPath);
-  await r2Client().send(
-    new PutObjectCommand({ Bucket: bucket, Key: key, Body: body, ContentType: contentType }),
+  const bin = existsSync('node_modules/.bin/wrangler') ? 'node_modules/.bin/wrangler' : 'wrangler';
+  const res = spawnSync(
+    bin,
+    ['r2', 'object', 'put', `${bucket}/${key}`, '--file', localPath, '--content-type', contentType, '--remote'],
+    { stdio: 'inherit', env: { ...process.env, CLOUDFLARE_API_TOKEN: token, CLOUDFLARE_ACCOUNT_ID: account } },
   );
+  if (res.status !== 0) throw new Error(`wrangler r2 upload failed for ${key}`);
   return key;
 }

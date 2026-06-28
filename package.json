@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "migrate": "node scripts/migrate.mjs",
-    "add-song": "node --env-file-if-exists=.env scripts/add-song.mjs"
+    "add-song": "node --env-file-if-exists=.env scripts/add-song.mjs",
+    "check-assets": "node scripts/check-assets.mjs"
   },
   "keywords": [],
   "author": "",
@@ -46,6 +47,7 @@
     "music-metadata": "^11.13.0",
     "typescript": "^6.0.3",
     "vitest": "^4.1.9",
+    "wrangler": "^4.105.0",
     "yaml": "^2.9.0"
   }
 }

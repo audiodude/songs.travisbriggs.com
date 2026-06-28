@@ -1,0 +1,4 @@
+#!/bin/sh
+# Block a push (which triggers deploy) if any visible song is missing its audio
+# in R2. Bypass in emergencies with: git push --no-verify
+exec node scripts/check-assets.mjs
