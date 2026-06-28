@@ -3,7 +3,7 @@
 export const EYEBROW = '▶ SONGS & SOUNDS · EST. 2008';
 
 export const BLURB =
-  "I record a song just about every time I have a feeling. Demos, jokes, heartbreakers, a couple I'm genuinely proud of. None of it's precious — all of it's honest.";
+  "I'm a musician, a multiinstrumentalist (of sorts), a songwriter. For 20 years I've been writing/recording/producing songs in my home recording studio slash bedroom (later, slash kitchen). There are lots of genres here, and the site doesn't tell a consistent story. Please enjoy. And of course share, like, and subscribe, smash that heart button, post to insta, tell your dog, take out a full page ad in NYT, etc.";
 
 export const SOCIAL = {
   site: 'https://travisbriggs.com',
