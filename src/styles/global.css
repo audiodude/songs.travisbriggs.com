@@ -1,0 +1,90 @@
+/* Self-hosted fonts (no Google Fonts CDN) */
+@import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource-variable/hanken-grotesk';
+@import '@fontsource/space-mono/400.css';
+@import '@fontsource/space-mono/700.css';
+
+/* Rainfall design-system tokens (values from the approved redesign handoff) */
+:root {
+  /* surfaces */
+  --bg: #475569;            /* page behind the card */
+  --card: #1f2937;          /* main content card */
+  --player: #111827;        /* docked player bar */
+  --rest: #374151;          /* chip + control rest fill, subtle border */
+  --border: #374151;        /* row hairlines */
+  --border-strong: #4b5563; /* control / play ring */
+
+  /* text */
+  --text: #ffffff;
+  --muted: #9ca3af;         /* blurb, meta labels */
+  --chip-text: #cbd5e1;     /* chip text on --rest */
+  --faint: #6b7280;         /* timecodes, faint meta */
+  --hi: #f3f4f6;            /* prev/next titles */
+
+  /* accent */
+  --accent: #3b82f6;        /* the blue */
+  --accent-deep: #2563eb;   /* primary-button hover */
+  --accent-light: #60a5fa;  /* ghost text/border, waveform top */
+
+  /* effects */
+  --accent-glow: 0 0 22px rgba(59, 130, 246, 0.5);
+  --accent-glow-lg: 0 0 28px rgba(59, 130, 246, 0.5);
+  --row-wash: linear-gradient(90deg, rgba(59, 130, 246, 0.08), transparent);
+  --hero-wash: radial-gradient(120% 140% at 100% 0%, rgba(59, 130, 246, 0.14), transparent 55%);
+
+  /* type */
+  --font-display: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  --font-body: 'Hanken Grotesk Variable', system-ui, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+
+  /* shape / layout */
+  --radius-card: 7px;
+  --radius-chip: 4px;
+  --maxw: 1000px;
+  --pad: 44px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+button:focus-visible, a:focus-visible, [role='slider']:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* animation flourishes (from the design references) */
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.6); }
+}
+@keyframes eqbar {
+  0% { transform: scaleY(0.35); }
+  100% { transform: scaleY(1); }
+}
+/* deep-linked song row highlight (e.g. /#slug) */
+.song:target > article,
+.song:target {
+  animation: rowHighlight 3s ease-out 0.3s both;
+}
+@keyframes rowHighlight {
+  0%, 25% { box-shadow: 0 0 0 3px var(--accent), 0 0 36px rgba(59, 130, 246, 0.6); }
+  100% { box-shadow: 0 0 0 3px transparent, 0 0 36px transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+}

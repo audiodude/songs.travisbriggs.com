@@ -1,0 +1,42 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const matomoId = import.meta.env.PUBLIC_MATOMO_SITE_ID;
+const fullTitle = `Songs and Sounds by Travis Briggs${title ? ' - ' + title : ''}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title ?? 'Songs and Sounds by Travis Briggs'} />
+    {description && <meta property="og:description" content={description} />}
+
+    {
+      matomoId && (
+        <script
+          is:inline
+          set:html={`var _paq=window._paq=window._paq||[];_paq.push(['trackPageView']);_paq.push(['enableLinkTracking']);(function(){var u='https://rainfalldev.matomo.cloud/';_paq.push(['setTrackerUrl',u+'matomo.php']);_paq.push(['setSiteId','${matomoId}']);var d=document,g=d.createElement('script'),s=d.getElementsByTagName('script')[0];g.async=true;g.src='https://cdn.matomo.cloud/rainfalldev.matomo.cloud/matomo.js';s.parentNode.insertBefore(g,s);})();`}
+        />
+      )
+    }
+
+    <ClientRouter />
+  </head>
+  <body>
+    <slot />
+    {/* Global persistent <Player client:load transition:persist /> mounted in Task 8 */}
+  </body>
+</html>
