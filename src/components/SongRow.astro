@@ -13,7 +13,9 @@ const related = shared !== undefined;
 const chips = related ? shared! : song.tags;
 const titleSize = related ? 26 : 33;
 const tagsWidth = related ? 200 : 230;
-const tagsMaxH = related ? 26 : 51;
+// Chips are 19px tall + 5px gap, so 2 lines = 43px; clip just past that so a
+// third line never peeks through. Related rows show a single line.
+const tagsMaxH = related ? 20 : 44;
 const tagsAttr = song.tags.join(',');
 ---
 
@@ -63,27 +65,29 @@ const tagsAttr = song.tags.join(',');
   /* note: ♪ at rest, play triangle on row hover (decorative — the whole row plays) */
   .note {
     flex: 0 0 auto;
-    width: 24px;
-    height: 24px;
+    width: 36px;
+    height: 36px;
     padding: 0;
     border: none;
     background: none;
+    -webkit-appearance: none;
+    appearance: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--note, var(--faint));
+    color: var(--note, #fff);
     transition: color 0.15s;
   }
-  .note-music { font-size: 19px; line-height: 1; }
+  .note-music { font-size: 30px; line-height: 1; }
   .note-play {
     display: none;
     width: 0;
     height: 0;
-    border-left: 9px solid currentColor;
-    border-top: 6px solid transparent;
-    border-bottom: 6px solid transparent;
-    margin-left: 3px;
+    border-left: 17px solid currentColor;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    margin-left: 4px;
   }
   .song-row:hover .note-music { display: none; }
   .song-row:hover .note-play { display: inline-block; }
@@ -94,22 +98,18 @@ const tagsAttr = song.tags.join(',');
   }
 
   /* inspect: open the song's page */
+  /* inspect: a big bare chevron that opens the song's page */
   .inspect {
     flex: 0 0 auto;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: var(--rest);
-    border: 1px solid var(--border-strong);
+    width: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--chip-text);
+    color: var(--faint);
     text-decoration: none;
-    font: 700 22px/1 var(--font-body);
-    padding-bottom: 2px;
-    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    font: 400 44px/1 var(--font-body);
+    transition: color 0.15s, transform 0.15s;
   }
-  .song-row:hover .inspect { border-color: var(--accent); }
-  .inspect:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .song-row:hover .inspect { color: var(--accent-light); }
+  .inspect:hover { color: var(--accent); transform: translateX(2px); }
 </style>
