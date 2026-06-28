@@ -50,11 +50,22 @@ html, body { margin: 0; padding: 0; }
 
 body {
   min-height: 100vh;
-  background: var(--bg);
+  background: #000; /* fallback under the fixed gradient layer */
   color: var(--text);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* Page background: a fixed black -> slate gradient behind all content. Using a
+   fixed pseudo-element (not background-attachment:fixed) keeps it consistent on
+   scroll and on iOS. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, #000 0%, var(--bg) 100%);
 }
 
 a { color: var(--accent); text-decoration: none; }
