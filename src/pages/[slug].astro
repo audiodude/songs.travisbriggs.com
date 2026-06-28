@@ -98,7 +98,7 @@ const externals = [
       <div class="prevnext" style="display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:30px var(--pad) 40px;">
         {nb.older ? (
           <a href={`/${nb.older.slug}/`} class="pn-card" style="display:flex; align-items:center; gap:14px; background:#1b232f; border:1px solid var(--border); border-radius:8px; padding:16px 18px; text-decoration:none; transition:border-color .15s;">
-            <span style="width:34px; height:34px; flex:0 0 34px; border-radius:50%; border:1px solid var(--border-strong); display:flex; align-items:center; justify-content:center; color:var(--chip-text); font-size:13px;">←</span>
+            <span style="width:42px; height:42px; flex:0 0 42px; border-radius:50%; border:1px solid var(--border-strong); display:flex; align-items:center; justify-content:center; color:var(--chip-text); font-size:20px; font-weight:700;">←</span>
             <span style="min-width:0;">
               <span style="display:block; font:700 10px/1 var(--font-mono); color:var(--faint); letter-spacing:.12em; text-transform:uppercase;">Older</span>
               <span style="display:block; font-family:var(--font-display); font-weight:700; font-size:18px; color:var(--hi); margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{nb.older.title}</span>
@@ -111,7 +111,7 @@ const externals = [
               <span style="display:block; font:700 10px/1 var(--font-mono); color:var(--faint); letter-spacing:.12em; text-transform:uppercase;">Newer</span>
               <span style="display:block; font-family:var(--font-display); font-weight:700; font-size:18px; color:var(--hi); margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{nb.newer.title}</span>
             </span>
-            <span style="width:34px; height:34px; flex:0 0 34px; border-radius:50%; border:1px solid var(--border-strong); display:flex; align-items:center; justify-content:center; color:var(--chip-text); font-size:13px;">→</span>
+            <span style="width:42px; height:42px; flex:0 0 42px; border-radius:50%; border:1px solid var(--border-strong); display:flex; align-items:center; justify-content:center; color:var(--chip-text); font-size:20px; font-weight:700;">→</span>
           </a>
         ) : <span></span>}
       </div>
