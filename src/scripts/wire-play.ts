@@ -12,6 +12,22 @@ if (!window.__playWired) {
   window.__playWired = true;
   document.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
+
+    // Copy-link button (song detail page).
+    const copy = target.closest<HTMLElement>('[data-copy-link]');
+    if (copy) {
+      e.preventDefault();
+      navigator.clipboard?.writeText(window.location.href).then(() => {
+        const original = copy.dataset.label ?? copy.textContent ?? '';
+        copy.dataset.label = original;
+        copy.textContent = 'Copied ✓';
+        window.setTimeout(() => {
+          copy.textContent = copy.dataset.label ?? original;
+        }, 1400);
+      });
+      return;
+    }
+
     // Let title links and tag links behave normally.
     const link = target.closest('a[href]');
     const tag = target.closest('[data-tag]');
