@@ -9,7 +9,11 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const matomoId = import.meta.env.PUBLIC_MATOMO_SITE_ID;
+// Matomo site id 5 (rainfalldev.matomo.cloud) — public, safe to commit. Only
+// fires in production builds so local dev/preview doesn't pollute analytics.
+// Override per-environment with PUBLIC_MATOMO_SITE_ID if ever needed.
+const matomoId = import.meta.env.PUBLIC_MATOMO_SITE_ID ?? '5';
+const enableAnalytics = import.meta.env.PROD && !!matomoId;
 const fullTitle = `Songs and Sounds by Travis Briggs${title ? ' - ' + title : ''}`;
 ---
 
@@ -26,7 +30,7 @@ const fullTitle = `Songs and Sounds by Travis Briggs${title ? ' - ' + title : ''
     {description && <meta property="og:description" content={description} />}
 
     {
-      matomoId && (
+      enableAnalytics && (
         <script
           is:inline
           set:html={`var _paq=window._paq=window._paq||[];_paq.push(['trackPageView']);_paq.push(['enableLinkTracking']);(function(){var u='https://rainfalldev.matomo.cloud/';_paq.push(['setTrackerUrl',u+'matomo.php']);_paq.push(['setSiteId','${matomoId}']);var d=document,g=d.createElement('script'),s=d.getElementsByTagName('script')[0];g.async=true;g.src='https://cdn.matomo.cloud/rainfalldev.matomo.cloud/matomo.js';s.parentNode.insertBefore(g,s);})();`}
