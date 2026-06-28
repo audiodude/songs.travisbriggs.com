@@ -15,10 +15,14 @@ export default function Player() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [peaks, setPeaks] = useState<number[]>([]);
   const restoreTime = useRef<number>(0);
+  // ?show_player=0 hides the player for previews/screenshots (also skips restore).
+  const [forceHide] = useState(
+    () => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('show_player') === '0',
+  );
 
   // Restore last track (paused) on a fresh page load.
   useEffect(() => {
-    if ($current.get()) return;
+    if (forceHide || $current.get()) return;
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
@@ -70,8 +74,9 @@ export default function Player() {
     }
   }, [seekReq]);
 
-  if (!current) {
-    // Keep a stable, persisted root + audio element even before first play.
+  if (!current || forceHide) {
+    // Keep a stable, persisted root + audio element even before first play
+    // (or when hidden via ?show_player=0).
     return (
       <div data-player-root>
         <audio ref={audioRef} preload="metadata" />

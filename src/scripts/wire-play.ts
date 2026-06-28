@@ -31,11 +31,11 @@ if (!window.__playWired) {
     // Blurb More/Less toggle (mobile hero).
     const bt = target.closest<HTMLElement>('[data-blurb-toggle]');
     if (bt) {
-      const blurb = document.querySelector('.hero-blurb');
+      const blurb = bt.closest('.hero-blurb');
       if (blurb) {
-        const collapsed = blurb.classList.toggle('clamped');
-        bt.textContent = collapsed ? 'More ▾' : 'Less ▴';
-        bt.setAttribute('aria-expanded', String(!collapsed));
+        const expanded = blurb.classList.toggle('expanded');
+        bt.textContent = expanded ? 'Less ▴' : 'More ▾';
+        bt.setAttribute('aria-expanded', String(expanded));
       }
       return;
     }

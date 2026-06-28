@@ -12,6 +12,7 @@ export default function Controls({ tags, freq, total }: Props) {
   const [sort, setSort] = useState<Sort>('newest');
   const [active, setActive] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false); // mobile "Filters" zippy
   const [count, setCount] = useState(total);
   const original = useRef<HTMLElement[]>([]);
 
@@ -71,12 +72,27 @@ export default function Controls({ tags, freq, total }: Props) {
   const dateActive = sort === 'newest' || sort === 'oldest';
 
   return (
-    <div style={{ position: 'relative' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-        <span style={{ font: '700 11px/1 var(--font-mono)', letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--faint)' }}>
+    <div className={`controls${expanded ? ' is-expanded' : ''}`} style={{ position: 'relative' }}>
+      <div
+        className="controls-head"
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}
+      >
+        <span
+          className="track-count"
+          style={{ font: '700 11px/1 var(--font-mono)', letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--faint)' }}
+        >
           {count} TRACKS
         </span>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+
+        <button
+          className="filters-toggle"
+          onClick={() => setExpanded((e) => !e)}
+          aria-expanded={expanded}
+        >
+          Filters{active.length ? ` (${active.length})` : ''} {expanded ? '⬆' : '⬇'}
+        </button>
+
+        <div className="pills" style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <Pill active={dateActive} onClick={clickDate}>
             {sort === 'oldest' ? 'Oldest ▴' : 'Newest ▾'}
           </Pill>
@@ -155,7 +171,7 @@ function Pill({ active, onClick, children }: { active: boolean; onClick: () => v
         cursor: 'pointer',
         background: active ? 'var(--accent)' : 'transparent',
         color: active ? '#fff' : 'var(--accent-light)',
-        border: active ? '1px solid var(--accent)' : '1px solid var(--accent)',
+        border: '1px solid var(--accent)',
       }}
     >
       {children}

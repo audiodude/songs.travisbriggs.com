@@ -16,7 +16,7 @@ const { tags, freq } = tagIndex(songs);
   >
     <Hero />
 
-    <div style="padding:16px var(--pad); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <div class="controls-bar" style="padding:16px var(--pad); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
       <Controls client:load tags={tags} freq={freq} total={songs.length} />
     </div>
 
