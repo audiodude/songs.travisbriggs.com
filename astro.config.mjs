@@ -11,6 +11,9 @@ const dev = process.env.NODE_ENV !== 'production';
 export default defineConfig({
   site: 'https://songs.travisbriggs.com',
   output: 'static',
-  trailingSlash: 'always', // preserve /<slug>/ URLs from the original site
+  // 'ignore' (default): the static build still emits /<slug>/index.html so the
+  // original /<slug>/ URLs resolve, without forcing redirects that would break
+  // Keystatic's /api/keystatic/* calls. Internal links + canonicals use /<slug>/.
+  build: { format: 'directory' },
   integrations: [react(), ...(dev ? [keystatic()] : [])],
 });

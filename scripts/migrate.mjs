@@ -11,7 +11,7 @@ const SRC = path.resolve(process.cwd(), '..', 'songs.travisbriggs.com');
 const SONGS_DIR = path.join(SRC, 'songs');
 const MP3_DIR = path.join(SRC, 'static', 'mp3');
 const OUT_CONTENT = path.resolve('src/content/songs');
-const OUT_PEAKS = path.resolve('src/data/peaks');
+const OUT_PEAKS = path.resolve('public/peaks');
 
 const exists = (p) => access(p).then(() => true).catch(() => false);
 

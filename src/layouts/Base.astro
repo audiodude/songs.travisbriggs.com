@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import Player from '../components/Player';
 import '../styles/global.css';
 
 interface Props {
@@ -37,6 +38,6 @@ const fullTitle = `Songs and Sounds by Travis Briggs${title ? ' - ' + title : ''
   </head>
   <body>
     <slot />
-    {/* Global persistent <Player client:load transition:persist /> mounted in Task 8 */}
+    <Player client:load transition:persist="global-player" />
   </body>
 </html>
