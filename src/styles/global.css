@@ -114,9 +114,10 @@ button:focus-visible, a:focus-visible, [role='slider']:focus-visible {
 @media (max-width: 820px) {
   :root { --pad: 20px; }
 
-  /* hero: single column, top nav left-aligned, photo constrained */
+  /* hero: single column; eyebrow + nav stack; nav links stay small; photo constrained */
   .hero-grid { grid-template-columns: 1fr !important; gap: 22px !important; }
-  .hero-topbar { justify-content: flex-start !important; margin-bottom: 18px !important; }
+  .hero-topbar { flex-direction: column; align-items: flex-start !important; gap: 14px; margin-bottom: 18px !important; }
+  .nav-link { font-size: 12px !important; }
   .hero-photo { max-width: 220px; justify-self: start; }
 
   /* song rows: drop the wide tag column, shrink the title */

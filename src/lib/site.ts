@@ -1,9 +1,9 @@
 // Shared site copy + links (single source of truth for nav/hero/footer).
 
-export const EYEBROW = '▶ SONGS & SOUNDS · EST. 2008';
+export const EYEBROW = '▶ Songs & Sounds · Est. 2008';
 
 export const BLURB =
-  "I'm a musician, a multiinstrumentalist (of sorts), a songwriter. For 20 years I've been writing/recording/producing songs in my home recording studio slash bedroom (later, slash kitchen). There are lots of genres here, and the site doesn't tell a consistent story. Please enjoy. And of course share, like, and subscribe, smash that heart button, post to insta, tell your dog, take out a full page ad in NYT, etc.";
+  "I'm a musician, a multi-instrumentalist (of sorts), a songwriter. For 20 years I've been writing/recording/producing songs in my home recording studio slash bedroom (later, slash kitchen). There are lots of genres here, and the site doesn't tell a consistent story. Please enjoy. And of course share, like, and subscribe, smash that heart button, post to insta, tell your dog, take out a full page ad in NYT, etc.";
 
 export const SOCIAL = {
   site: 'https://travisbriggs.com',

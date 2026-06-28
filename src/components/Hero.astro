@@ -4,15 +4,15 @@ import { EYEBROW, BLURB } from '../lib/site';
 ---
 
 <header class="hero" style="position:relative; padding:30px var(--pad) 32px; background:var(--hero-wash);">
-  <div class="hero-topbar" style="display:flex; justify-content:flex-end; margin-bottom:30px;">
+  <div class="hero-topbar" style="display:flex; align-items:flex-start; justify-content:space-between; gap:24px; margin-bottom:34px;">
+    <div class="eyebrow" style="font:700 13px/1 var(--font-mono); letter-spacing:.1em; color:var(--accent); padding-top:2px;">
+      {EYEBROW}
+    </div>
     <Nav active="songs" />
   </div>
 
   <div class="hero-grid" style="display:grid; grid-template-columns:1fr 280px; align-items:center; gap:40px;">
     <div>
-      <div style="font:700 12px/1 var(--font-mono); letter-spacing:.22em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;">
-        {EYEBROW}
-      </div>
       <h1 class="hero-name" style="margin:0; font-family:var(--font-display); font-weight:800; line-height:.84; letter-spacing:-.03em;">
         <span style="display:block; color:var(--text);">TRAVIS</span>
         <span style="display:block; color:var(--accent);">BRIGGS</span>

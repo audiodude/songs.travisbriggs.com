@@ -32,13 +32,13 @@ const externals = [
   >
     <!-- top bar -->
     <div class="detail-topnav" style="display:flex; align-items:center; padding:22px var(--pad); border-bottom:1px solid var(--border);">
-      <a href="/" class="nav-link" style="display:inline-flex; align-items:center; gap:8px; font:600 12px/1 var(--font-body); color:var(--muted); text-decoration:none;">
+      <a href="/" class="nav-link" style="display:inline-flex; align-items:center; gap:8px; font:600 15px/1 var(--font-body); color:var(--muted); text-decoration:none;">
         <span style="font-size:15px; line-height:1;">←</span> All Songs
       </a>
       <div style="flex:1;"></div>
       <nav style="display:flex; align-items:center; flex-wrap:wrap; gap:14px 22px;">
         {externals.map((l) => (
-          <a href={l.href} target="_blank" rel="noopener" class="nav-link" style="font:600 12px/1 var(--font-body); color:var(--muted); text-decoration:none;">{l.label}</a>
+          <a href={l.href} target="_blank" rel="noopener" class="nav-link" style="font:600 15px/1 var(--font-body); color:var(--muted); text-decoration:none;">{l.label}</a>
         ))}
       </nav>
     </div>
