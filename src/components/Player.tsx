@@ -164,7 +164,7 @@ export default function Player() {
             )}
           </button>
 
-          <div style={{ flex: '0 0 auto', minWidth: 150, maxWidth: 220 }}>
+          <div className="player-meta" style={{ flex: '0 0 auto', minWidth: 150, maxWidth: 220 }}>
             <a
               href={`/${current.slug}/`}
               style={{
@@ -190,7 +190,7 @@ export default function Player() {
             <Waveform peaks={peaks} progress={progress} onSeek={requestSeek} variant="mini" />
           </div>
 
-          <span style={{ font: "400 12px/1 var(--font-mono)", color: 'var(--faint)', flex: '0 0 auto' }}>
+          <span className="player-time" style={{ font: "400 12px/1 var(--font-mono)", color: 'var(--faint)', flex: '0 0 auto' }}>
             {fmtDuration(time.cur * 1000)} / {fmtDuration(time.dur * 1000)}
           </span>
         </div>

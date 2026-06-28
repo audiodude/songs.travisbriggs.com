@@ -3,8 +3,8 @@ import Nav from './Nav.astro';
 import { EYEBROW, BLURB } from '../lib/site';
 ---
 
-<header style="position:relative; padding:50px 44px 32px; display:grid; grid-template-columns:1fr 150px; align-items:center; gap:32px; background:var(--hero-wash);">
-  <div style="position:absolute; top:52px; right:44px;">
+<header class="hero" style="position:relative; padding:50px var(--pad) 32px; display:grid; grid-template-columns:1fr 150px; align-items:center; gap:32px; background:var(--hero-wash);">
+  <div class="hero-nav" style="position:absolute; top:52px; right:44px;">
     <Nav active="songs" />
   </div>
 
@@ -12,7 +12,7 @@ import { EYEBROW, BLURB } from '../lib/site';
     <div style="font:700 12px/1 var(--font-mono); letter-spacing:.22em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;">
       {EYEBROW}
     </div>
-    <h1 style="margin:0; font-family:var(--font-display); font-weight:800; font-size:86px; line-height:.84; letter-spacing:-.03em;">
+    <h1 class="hero-name" style="margin:0; font-family:var(--font-display); font-weight:800; line-height:.84; letter-spacing:-.03em;">
       <span style="display:block; color:var(--text);">TRAVIS</span>
       <span style="display:block; color:var(--accent);">BRIGGS</span>
     </h1>
@@ -21,7 +21,7 @@ import { EYEBROW, BLURB } from '../lib/site';
     </p>
   </div>
 
-  <div style="aspect-ratio:1/1.18; border-radius:4px; border:1px solid var(--border-strong); box-shadow:0 0 0 6px var(--player), 0 0 0 7px var(--border-strong); background:repeating-linear-gradient(45deg,#3a4656,#3a4656 7px,#2e3a49 7px,#2e3a49 14px); display:flex; align-items:center; justify-content:center;">
+  <div class="hero-photo" style="aspect-ratio:1/1.18; border-radius:4px; border:1px solid var(--border-strong); box-shadow:0 0 0 6px var(--player), 0 0 0 7px var(--border-strong); background:repeating-linear-gradient(45deg,#3a4656,#3a4656 7px,#2e3a49 7px,#2e3a49 14px); display:flex; align-items:center; justify-content:center;">
     {/* TODO: swap for a real photo — drop one in public/ and replace this block with an <img> */}
     <span style="font:400 11px/1.4 var(--font-mono); letter-spacing:.12em; color:var(--faint);">[ PHOTO OF TRAVIS ]</span>
   </div>

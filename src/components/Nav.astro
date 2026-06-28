@@ -7,7 +7,7 @@ const { active = null } = Astro.props;
 const links = navLinks(active);
 ---
 
-<nav style="display:flex; align-items:center; gap:22px;">
+<nav style="display:flex; align-items:center; flex-wrap:wrap; gap:14px 22px;">
   {
     links.map((l) => (
       <a

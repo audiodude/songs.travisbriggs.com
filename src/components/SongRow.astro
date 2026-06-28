@@ -34,7 +34,7 @@ const tagsAttr = song.tags.join(',');
     style={`flex:1; min-width:0; font-family:var(--font-display); font-weight:700; font-size:${titleSize}px; line-height:1; letter-spacing:-.02em; color:var(--text); text-decoration:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;`}
   >{song.title}</a>
 
-  <span style={`display:flex; flex-wrap:wrap; justify-content:flex-end; align-content:flex-start; gap:5px; flex:0 0 auto; width:${tagsWidth}px; max-height:${tagsMaxH}px; overflow:hidden;`}>
+  <span class="row-tags" style={`display:flex; flex-wrap:wrap; justify-content:flex-end; align-content:flex-start; gap:5px; flex:0 0 auto; width:${tagsWidth}px; max-height:${tagsMaxH}px; overflow:hidden;`}>
     {
       chips.map((t) =>
         related ? (
@@ -46,7 +46,7 @@ const tagsAttr = song.tags.join(',');
     }
   </span>
 
-  <span style="font:400 12px/1 var(--font-mono); color:var(--faint); flex:0 0 auto; width:74px; text-align:right;">{fmtMonthYear(song.date)}</span>
+  <span class="row-date" style="font:400 12px/1 var(--font-mono); color:var(--faint); flex:0 0 auto; width:74px; text-align:right;">{fmtMonthYear(song.date)}</span>
   <span style="font:400 12px/1 var(--font-mono); color:var(--accent); flex:0 0 auto; width:38px; text-align:right;">{fmtDuration(song.duration)}</span>
 
   <button

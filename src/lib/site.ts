@@ -7,8 +7,8 @@ export const BLURB =
 
 export const SOCIAL = {
   site: 'https://travisbriggs.com',
-  mastodon: 'https://musicians.today/@audiodude',
-  github: 'https://github.com/audiodude/songs.travisbriggs.com',
+  mastodon: 'https://sfba.social/@audiodude',
+  github: 'https://github.com/audiodude/songs2.travisbriggs.com',
 };
 
 export interface NavLink {
@@ -21,7 +21,12 @@ export interface NavLink {
 
 export function navLinks(active: 'songs' | null = null): NavLink[] {
   return [
-    { label: 'All Songs', href: '/', external: false, current: active === 'songs' },
+    {
+      label: 'All Songs',
+      href: '/',
+      external: false,
+      current: active === 'songs',
+    },
     { label: 'travisbriggs.com ↗', href: SOCIAL.site, external: true },
     { label: 'Mastodon ↗', href: SOCIAL.mastodon, external: true },
     { label: 'GitHub ↗', href: SOCIAL.github, external: true },

@@ -15,11 +15,11 @@ const { tags, freq } = tagIndex(songs);
   >
     <Hero />
 
-    <div style="padding:16px 44px; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <div style="padding:16px var(--pad); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
       <Controls client:load tags={tags} freq={freq} total={songs.length} />
     </div>
 
-    <ul data-song-list style="list-style:none; margin:0; padding:6px 44px 96px;">
+    <ul data-song-list style="list-style:none; margin:0; padding:6px var(--pad) 96px;">
       {
         songs.map((s) => (
           <li id={s.slug} class="song">
@@ -31,7 +31,7 @@ const { tags, freq } = tagIndex(songs);
         data-empty
         style="display:none; padding:48px 0; text-align:center; font:400 15px/1.6 var(--font-body); color:var(--muted);"
       >
-        No songs match that combination. Even your taste isn't <em>that</em> specific. Try fewer tags.
+        No songs match that combination. Try fewer tags.
       </li>
     </ul>
   </div>
