@@ -3,26 +3,34 @@ import Nav from './Nav.astro';
 import { EYEBROW, BLURB } from '../lib/site';
 ---
 
-<header class="hero" style="position:relative; padding:50px var(--pad) 32px; display:grid; grid-template-columns:1fr 150px; align-items:center; gap:32px; background:var(--hero-wash);">
-  <div class="hero-nav" style="position:absolute; top:52px; right:44px;">
+<header class="hero" style="position:relative; padding:30px var(--pad) 32px; background:var(--hero-wash);">
+  <div class="hero-topbar" style="display:flex; justify-content:flex-end; margin-bottom:30px;">
     <Nav active="songs" />
   </div>
 
-  <div>
-    <div style="font:700 12px/1 var(--font-mono); letter-spacing:.22em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;">
-      {EYEBROW}
+  <div class="hero-grid" style="display:grid; grid-template-columns:1fr 280px; align-items:center; gap:40px;">
+    <div>
+      <div style="font:700 12px/1 var(--font-mono); letter-spacing:.22em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;">
+        {EYEBROW}
+      </div>
+      <h1 class="hero-name" style="margin:0; font-family:var(--font-display); font-weight:800; line-height:.84; letter-spacing:-.03em;">
+        <span style="display:block; color:var(--text);">TRAVIS</span>
+        <span style="display:block; color:var(--accent);">BRIGGS</span>
+      </h1>
+      <p style="margin:18px 0 0; font:400 16px/1.5 var(--font-body); color:var(--muted); max-width:440px;">
+        {BLURB}
+      </p>
     </div>
-    <h1 class="hero-name" style="margin:0; font-family:var(--font-display); font-weight:800; line-height:.84; letter-spacing:-.03em;">
-      <span style="display:block; color:var(--text);">TRAVIS</span>
-      <span style="display:block; color:var(--accent);">BRIGGS</span>
-    </h1>
-    <p style="margin:18px 0 0; font:400 16px/1.5 var(--font-body); color:var(--muted); max-width:440px;">
-      {BLURB}
-    </p>
-  </div>
 
-  <div class="hero-photo" style="aspect-ratio:1/1.18; border-radius:4px; border:1px solid var(--border-strong); box-shadow:0 0 0 6px var(--player), 0 0 0 7px var(--border-strong); background:repeating-linear-gradient(45deg,#3a4656,#3a4656 7px,#2e3a49 7px,#2e3a49 14px); display:flex; align-items:center; justify-content:center;">
-    {/* TODO: swap for a real photo — drop one in public/ and replace this block with an <img> */}
-    <span style="font:400 11px/1.4 var(--font-mono); letter-spacing:.12em; color:var(--faint);">[ PHOTO OF TRAVIS ]</span>
+    <div class="hero-photo" style="aspect-ratio:1/1.18; border-radius:4px; overflow:hidden; border:1px solid var(--border-strong); box-shadow:0 0 0 6px var(--player), 0 0 0 7px var(--border-strong);">
+      <img
+        src="/travis.jpg"
+        alt="Travis Briggs holding a surf-green Stratocaster"
+        width="900"
+        height="1012"
+        loading="eager"
+        style="width:100%; height:100%; object-fit:cover; object-position:center 30%; display:block;"
+      />
+    </div>
   </div>
 </header>
