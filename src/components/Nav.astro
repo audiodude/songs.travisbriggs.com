@@ -1,0 +1,31 @@
+---
+import { navLinks } from '../lib/site';
+interface Props {
+  active?: 'songs' | null;
+}
+const { active = null } = Astro.props;
+const links = navLinks(active);
+---
+
+<nav style="display:flex; align-items:center; gap:22px;">
+  {
+    links.map((l) => (
+      <a
+        href={l.href}
+        class="nav-link"
+        data-current={l.current ? 'true' : undefined}
+        target={l.external ? '_blank' : undefined}
+        rel={l.external ? 'noopener' : undefined}
+        style={`font:600 12px/1 var(--font-body); text-decoration:none; transition:color .15s; color:${l.current ? 'var(--accent)' : 'var(--muted)'};`}
+      >
+        {l.label}
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .nav-link:not([data-current]):hover {
+    color: var(--text) !important;
+  }
+</style>

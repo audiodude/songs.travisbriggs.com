@@ -1,0 +1,78 @@
+---
+import type { Song } from '../lib/types';
+import { fmtMonthYear, fmtDuration } from '../lib/format';
+
+interface Props {
+  song: Song;
+  /** when set, render the related-row variant showing these shared tags */
+  shared?: string[];
+}
+
+const { song, shared } = Astro.props;
+const related = shared !== undefined;
+const chips = related ? shared! : song.tags;
+const titleSize = related ? 26 : 33;
+const tagsWidth = related ? 200 : 230;
+const tagsMaxH = related ? 26 : 51;
+const tagsAttr = song.tags.join(',');
+---
+
+<div
+  class="song-row"
+  data-play
+  data-slug={song.slug}
+  data-title={song.title}
+  data-src={song.src}
+  data-tags={tagsAttr}
+  style="display:flex; align-items:center; gap:20px; padding:16px 0; border-bottom:1px solid var(--border); cursor:pointer;"
+>
+  <span class="note" style="flex:0 0 auto; width:24px; font-size:19px; line-height:1; text-align:center; color:var(--note, var(--faint)); transition:color .15s;">♪</span>
+
+  <a
+    href={`/${song.slug}/`}
+    class="row-title"
+    style={`flex:1; min-width:0; font-family:var(--font-display); font-weight:700; font-size:${titleSize}px; line-height:1; letter-spacing:-.02em; color:var(--text); text-decoration:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;`}
+  >{song.title}</a>
+
+  <span style={`display:flex; flex-wrap:wrap; justify-content:flex-end; align-content:flex-start; gap:5px; flex:0 0 auto; width:${tagsWidth}px; max-height:${tagsMaxH}px; overflow:hidden;`}>
+    {
+      chips.map((t) =>
+        related ? (
+          <span style="font:400 11px/1 var(--font-mono); color:var(--chip-text); background:var(--rest); padding:4px 8px; border-radius:var(--radius-chip); white-space:nowrap;">{t}</span>
+        ) : (
+          <a href={`/?tag=${encodeURIComponent(t)}`} data-tag={t} class="chip" style="font:400 11px/1 var(--font-mono); color:var(--chip-text); background:var(--rest); padding:4px 8px; border-radius:var(--radius-chip); white-space:nowrap; text-decoration:none; transition:color .15s, background .15s;">{t}</a>
+        ),
+      )
+    }
+  </span>
+
+  <span style="font:400 12px/1 var(--font-mono); color:var(--faint); flex:0 0 auto; width:74px; text-align:right;">{fmtMonthYear(song.date)}</span>
+  <span style="font:400 12px/1 var(--font-mono); color:var(--accent); flex:0 0 auto; width:38px; text-align:right;">{fmtDuration(song.duration)}</span>
+
+  <button
+    type="button"
+    class="play-btn"
+    aria-label={`Play ${song.title}`}
+    style="flex:0 0 auto; width:34px; height:34px; border-radius:50%; background:var(--rest); border:1px solid var(--border-strong); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background .15s, border-color .15s;"
+  >
+    <span style="width:0; height:0; border-left:9px solid #fff; border-top:6px solid transparent; border-bottom:6px solid transparent; margin-left:2px;"></span>
+  </button>
+</div>
+
+<style>
+  .song-row:hover {
+    --note: var(--accent);
+    background: var(--row-wash);
+  }
+  .song-row:hover .play-btn {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .chip:hover {
+    background: var(--accent) !important;
+    color: #fff !important;
+  }
+  .row-title:hover {
+    color: var(--accent-light);
+  }
+</style>
