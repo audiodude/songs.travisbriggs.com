@@ -119,6 +119,7 @@ export default function Player() {
         }}
       >
         <div
+          className="player-inner"
           style={{
             maxWidth: 'var(--maxw)',
             margin: '0 auto',
@@ -195,7 +196,7 @@ export default function Player() {
             </div>
           </div>
 
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="player-wave" style={{ flex: 1, minWidth: 0 }}>
             <Waveform peaks={peaks} progress={progress} onSeek={requestSeek} variant="mini" />
           </div>
 
