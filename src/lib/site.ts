@@ -9,7 +9,7 @@ export const SOCIAL = {
   site: 'https://travisbriggs.com',
   dangerThirdRail: 'https://dangerthirdrail.com',
   mastodon: 'https://sfba.social/@audiodude',
-  github: 'https://github.com/audiodude/songs2.travisbriggs.com',
+  github: 'https://github.com/audiodude/songs.travisbriggs.com',
 };
 
 export interface NavLink {
