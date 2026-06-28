@@ -45,6 +45,7 @@
     "@types/react-dom": "^19.2.3",
     "music-metadata": "^11.13.0",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.9",
+    "yaml": "^2.9.0"
   }
 }
