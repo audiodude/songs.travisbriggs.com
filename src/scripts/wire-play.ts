@@ -28,6 +28,18 @@ if (!window.__playWired) {
       return;
     }
 
+    // Blurb More/Less toggle (mobile hero).
+    const bt = target.closest<HTMLElement>('[data-blurb-toggle]');
+    if (bt) {
+      const blurb = document.querySelector('.hero-blurb');
+      if (blurb) {
+        const collapsed = blurb.classList.toggle('clamped');
+        bt.textContent = collapsed ? 'More ▾' : 'Less ▴';
+        bt.setAttribute('aria-expanded', String(!collapsed));
+      }
+      return;
+    }
+
     // Let title links and tag links behave normally.
     const link = target.closest('a[href]');
     const tag = target.closest('[data-tag]');

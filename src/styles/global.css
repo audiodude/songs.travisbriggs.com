@@ -111,14 +111,35 @@ button:focus-visible, a:focus-visible, [role='slider']:focus-visible {
 .hero-name { font-size: clamp(40px, 9vw, 86px); }
 .detail-title { font-size: clamp(32px, 6vw, 56px); }
 
+/* "More/Less" blurb toggle — desktop hides it (full blurb always shown). */
+.blurb-toggle {
+  display: none;
+  margin-top: 10px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: 600 13px/1 var(--font-body);
+  color: var(--accent-light);
+}
+.blurb-toggle:hover { color: var(--text); }
+
 @media (max-width: 820px) {
   :root { --pad: 20px; }
 
-  /* hero: single column; eyebrow + nav stack; nav links stay small; photo constrained */
-  .hero-grid { grid-template-columns: 1fr !important; gap: 22px !important; }
-  .hero-topbar { flex-direction: column; align-items: flex-start !important; gap: 14px; margin-bottom: 18px !important; }
+  /* hero: single column, centered + compact; blurb clamps with a More toggle */
+  .hero { padding-top: 14px !important; }
+  .hero-grid { grid-template-columns: 1fr !important; gap: 20px !important; justify-items: center; text-align: center; }
+  .hero-topbar { flex-direction: column; align-items: center !important; gap: 6px; margin-bottom: 16px !important; }
+  .hero-topbar nav { justify-content: center; }
   .nav-link { font-size: 12px !important; }
-  .hero-photo { max-width: 220px; justify-self: start; }
+  .hero-photo { max-width: 150px; justify-self: center; }
+  .hero-blurb { margin-left: auto; margin-right: auto; }
+  .blurb-toggle { display: inline-flex; }
+  .hero-blurb.clamped { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
+
+  /* full-bleed card: no black band above it on mobile */
+  .card { margin-top: 0 !important; border-radius: 0 !important; }
 
   /* song rows: drop the wide tag column, shrink the title */
   .row-tags { display: none !important; }

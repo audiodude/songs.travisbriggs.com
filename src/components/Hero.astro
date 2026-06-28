@@ -17,9 +17,10 @@ import { EYEBROW, BLURB } from '../lib/site';
         <span style="display:block; color:var(--text);">TRAVIS</span>
         <span style="display:block; color:var(--accent);">BRIGGS</span>
       </h1>
-      <p style="margin:18px 0 0; font:400 16px/1.5 var(--font-body); color:var(--muted); max-width:440px;">
+      <p class="hero-blurb clamped" style="margin:18px 0 0; font:400 16px/1.5 var(--font-body); color:var(--muted); max-width:440px;">
         {BLURB}
       </p>
+      <button type="button" class="blurb-toggle" data-blurb-toggle aria-expanded="false">More ▾</button>
     </div>
 
     <div class="hero-photo" style="aspect-ratio:1/1.18; border-radius:4px; overflow:hidden; border:1px solid var(--border-strong); box-shadow:0 0 0 6px var(--player), 0 0 0 7px var(--border-strong);">
