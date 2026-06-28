@@ -15,5 +15,8 @@ export default defineConfig({
   // original /<slug>/ URLs resolve, without forcing redirects that would break
   // Keystatic's /api/keystatic/* calls. Internal links + canonicals use /<slug>/.
   build: { format: 'directory' },
+  // The Astro dev toolbar floats bottom-center and collides with our fixed
+  // player bar; it's dev-only noise here. Re-enable by removing this if wanted.
+  devToolbar: { enabled: false },
   integrations: [react(), ...(dev ? [keystatic()] : [])],
 });
