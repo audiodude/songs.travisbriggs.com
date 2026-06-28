@@ -32,6 +32,9 @@ importers:
       astro:
         specifier: ^6.4.8
         version: 6.4.8(idb-keyval@6.2.5)(lightningcss@1.32.0)(rollup@4.62.2)
+      marked:
+        specifier: ^18.0.5
+        version: 18.0.5
       nanostores:
         specifier: ^1.4.0
         version: 1.4.0
@@ -2590,6 +2593,11 @@ packages:
 
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
+
+  marked@18.0.5:
+    resolution: {integrity: sha512-S6GcvALHg6K4ohtu4E7x0a1AqhAjp6cV8KhLSyN9qVapnzJkusVBxZRcIU9AeYsbe6P1hKDusSbEOzGyyuce6w==}
+    engines: {node: '>= 20'}
+    hasBin: true
 
   match-sorter@6.3.4:
     resolution: {integrity: sha512-jfZW7cWS5y/1xswZo8VBOdudUiSd9nifYRWphc9M5D/ee4w4AoXLgBEdRbgVaxbMuagBPeUC5y2Hi8DO6o9aDg==}
@@ -6414,6 +6422,8 @@ snapshots:
       source-map-js: 1.2.1
 
   markdown-table@3.0.4: {}
+
+  marked@18.0.5: {}
 
   match-sorter@6.3.4:
     dependencies:
