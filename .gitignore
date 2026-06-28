@@ -1,0 +1,19 @@
+node_modules
+dist
+.astro
+.wrangler
+# audio is never in git
+*.mp3
+# secrets — never commit or deploy
+.env
+.env.*
+!.env.example
+.dev.vars
+.secrets
+*.pem
+*.key
+credentials*
+.DS_Store
+
+# stray AUR checkout that appeared during setup — not part of this project
+/asdf-vm/

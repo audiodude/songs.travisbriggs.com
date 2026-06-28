@@ -1,0 +1,49 @@
+{
+  "name": "songs2-travisbriggs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "migrate": "node scripts/migrate.mjs",
+    "add-song": "node scripts/add-song.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": ">=22"
+  },
+  "type": "module",
+  "dependencies": {
+    "@astrojs/react": "^5.0.7",
+    "@fontsource-variable/bricolage-grotesque": "^5.2.10",
+    "@fontsource-variable/hanken-grotesk": "^5.2.8",
+    "@fontsource/space-mono": "^5.2.9",
+    "@keystatic/astro": "^5.1.0",
+    "@keystatic/core": "^0.5.50",
+    "@nanostores/react": "^1.1.0",
+    "astro": "^6.4.8",
+    "nanostores": "^1.4.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  },
+  "devDependencies": {
+    "@aws-sdk/client-s3": "^3.1075.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "music-metadata": "^11.13.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
+  }
+}
