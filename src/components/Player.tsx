@@ -181,7 +181,16 @@ export default function Player() {
             >
               {current.title}
             </a>
-            <div style={{ font: "400 11px/1.4 var(--font-mono)", color: 'var(--faint)', marginTop: 2 }}>
+            <div
+              style={{
+                font: '400 11px/1.4 var(--font-mono)',
+                color: 'var(--faint)',
+                marginTop: 2,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
               {tagLine}
             </div>
           </div>
