@@ -62,12 +62,14 @@ const HTML = `<!doctype html><html><head><meta charset="utf-8"><title>Tag reorga
   button{font:600 13px/1 ui-sans-serif;padding:8px 14px;border-radius:8px;border:1px solid var(--accent);background:transparent;color:#93c5fd;cursor:pointer}
   button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
   button:disabled{opacity:.4;cursor:default}
-  main{padding:16px 24px 120px;max-width:980px;margin:0 auto}
+  main{padding:16px 24px 120px;max-width:1180px;margin:0 auto}
   table{width:100%;border-collapse:collapse}
-  th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rest)}
+  th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rest);vertical-align:top}
   th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
-  td.count{color:var(--muted);width:60px;text-align:right;font-variant-numeric:tabular-nums}
-  td.orig{font-family:ui-monospace,monospace}
+  td.songs{font-size:12px;line-height:1.45;max-width:600px}
+  td.songs b{color:var(--text);margin-right:4px;font-variant-numeric:tabular-nums}
+  td.orig{font-family:ui-monospace,monospace;white-space:nowrap;padding-top:9px}
+  td:last-child{padding-top:7px}
   input{font:13px/1 ui-monospace,monospace;background:var(--rest);border:1px solid transparent;color:var(--text);padding:6px 8px;border-radius:6px;width:240px}
   input.changed{border-color:var(--accent)}
   input.del{text-decoration:line-through;color:var(--warn);opacity:.7}
@@ -84,7 +86,7 @@ const HTML = `<!doctype html><html><head><meta charset="utf-8"><title>Tag reorga
 </header>
 <main>
   <p class="muted">Edit a tag to <b>rename</b> it. Give two tags the <b>same</b> value to <b>merge</b> them. <b>Clear</b> a field to delete that tag everywhere. Then Apply.</p>
-  <table><thead><tr><th>tag</th><th class="count">songs</th><th>canonical</th></tr></thead><tbody id="rows"></tbody></table>
+  <table><thead><tr><th>tag</th><th>songs</th><th>canonical</th></tr></thead><tbody id="rows"></tbody></table>
 </main>
 <datalist id="alltags"></datalist>
 <div class="summary">
@@ -93,6 +95,7 @@ const HTML = `<!doctype html><html><head><meta charset="utf-8"><title>Tag reorga
 </div>
 <script>
 let TAGS=[];
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
 async function load(){
   const r=await fetch('/api/state'); const d=await r.json();
   TAGS=d.tags; document.getElementById('sub').textContent=d.tags.length+' tags across '+d.songCount+' songs';
@@ -103,7 +106,7 @@ function render(){
   const dl=document.getElementById('alltags'); dl.innerHTML=TAGS.map(t=>'<option value="'+t.tag+'">').join('');
   for(const t of TAGS){
     const tr=document.createElement('tr');
-    tr.innerHTML='<td class="orig">'+t.tag+'</td><td class="count">'+t.count+'</td><td></td>';
+    tr.innerHTML='<td class="orig">'+t.tag+'</td><td class="songs"><b>'+t.count+'</b> <span class="muted">'+(t.songs||[]).map(esc).join(', ')+'</span></td><td></td>';
     const inp=document.createElement('input'); inp.value=t.canonical??t.tag; inp.setAttribute('list','alltags');
     inp.dataset.orig=t.tag; inp.oninput=()=>{t.canonical=inp.value;update()};
     tr.children[2].appendChild(inp); tb.appendChild(tr); t._inp=inp; t._tr=tr;
@@ -151,8 +154,11 @@ const server = http.createServer(async (req, res) => {
     }
     if (req.method === 'GET' && req.url === '/api/state') {
       const list = await loadSongs();
-      const f = freq(list);
-      const tags = Object.keys(f).sort().map((t) => ({ tag: t, count: f[t] }));
+      const m = {};
+      for (const s of list) for (const t of s.tags) (m[t] = m[t] || []).push(s.title);
+      const tags = Object.keys(m)
+        .map((t) => ({ tag: t, count: m[t].length, songs: m[t].sort() }))
+        .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
       res.setHeader('content-type', 'application/json');
       return res.end(JSON.stringify({ tags, songCount: list.length }));
     }
