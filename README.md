@@ -38,6 +38,8 @@ pnpm dev          # http://localhost:4321
 - The CMS admin is at **http://localhost:4321/keystatic/** (local mode — it reads
   and writes the files in `src/content/songs/`). It only runs under `astro dev`;
   the production build is fully static and contains no admin.
+- Add **`?show_player=0`** to any URL to hide the player (and skip the saved-track
+  restore) — handy for clean previews/screenshots.
 
 ## Add or edit a song
 
@@ -51,7 +53,10 @@ This uploads the mp3 to R2, reads its duration, generates the waveform peaks, an
 scaffolds `src/content/songs/<slug>.yaml`. Then open `/keystatic/` to write the
 note and tags. (`--no-upload` skips R2 for offline scaffolding.)
 
-Requires R2 credentials in `.env` (copy `.env.example` → `.env`).
+The upload uses your Cloudflare token (`CF_API_TOKEN` from `~/.secrets`, or `.env`) via
+wrangler — no separate R2 key. Copy `.env.example` → `.env` for the bucket/account config.
+`add-song` is idempotent: re-running on an existing song keeps its note/tags/date and
+just refreshes the duration/peaks/audio.
 
 **Edit an existing song:** `pnpm dev` → `/keystatic/` → edit → commit & push.
 
