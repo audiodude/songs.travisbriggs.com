@@ -12,7 +12,8 @@
     "add-song": "node --env-file-if-exists=.env scripts/add-song.mjs",
     "check-assets": "node scripts/check-assets.mjs",
     "recalc-durations": "node scripts/recalc-durations.mjs",
-    "tag-tool": "node scripts/tag-tool.mjs"
+    "tag-tool": "node scripts/tag-tool.mjs",
+    "tags:gen": "node scripts/gen-tags.mjs"
   },
   "keywords": [],
   "author": "",

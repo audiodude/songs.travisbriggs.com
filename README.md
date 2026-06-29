@@ -55,21 +55,39 @@ Requires R2 credentials in `.env` (copy `.env.example` → `.env`).
 
 **Edit an existing song:** `pnpm dev` → `/keystatic/` → edit → commit & push.
 
+## Tags
+
+Tags are chosen in Keystatic from a **fixed canonical list** (`src/data/tags.ts`) —
+you pick from existing tags instead of free-typing, which prevents drift/variants.
+
+- **Add a new tag** (e.g. for a bebop / acid-house song): `pnpm tags:gen acid.house bebop`
+  adds them to the list — then restart `pnpm dev` so the Tags picker shows them.
+- **Re-sync the list** after any tag change: `pnpm tags:gen` (union of tags used across
+  songs + any you've added to the file).
+- **Reorganize in bulk** — merge / rename / delete tags across every song: `pnpm tag-tool`
+  opens a local UI (shows song titles per tag, sorted by count); hit Apply to rewrite the
+  song files, then run `pnpm tags:gen`.
+
+`pnpm recalc-durations` re-derives every song's duration from its mp3 (one-off maintenance).
+
 ## Build & deploy
 
 ```bash
 pnpm build        # -> dist/ (static)
 ```
 
-Deployed to **Cloudflare Pages**, publishing **`dist/` only** (never the repo root).
-Set these as Pages environment variables:
+**Pushing to `main` auto-deploys** via GitHub Actions (`.github/workflows/deploy.yml`): it
+builds and publishes **`dist/` only** to Cloudflare Pages (live at songs.travisbriggs.com).
+Audio is served from Cloudflare R2 at `audio.songs.travisbriggs.com`.
 
-- `PUBLIC_AUDIO_BASE` — e.g. `https://audio.songs.travisbriggs.com`
-- `PUBLIC_MATOMO_SITE_ID` — Matomo site id (omit to disable analytics)
+A **pre-push hook** + a CI step (`pnpm check-assets`) block the push/deploy if any visible
+song is missing its mp3 in R2 (bypass with `git push --no-verify`).
 
-> Security: this is a pure static site with no server secrets in the build. The
-> only secret (the R2 upload key) lives in your local `.env` / Cloudflare's secret
-> store, never in the repo or `dist/`.
+`PUBLIC_AUDIO_BASE` and `PUBLIC_MATOMO_SITE_ID` default correctly in code; override via env
+only if needed.
+
+> Security: pure static site; deploys `dist/` only (never the repo root). The R2 upload
+> uses your Cloudflare token from `~/.secrets` (or `.env`) — never committed or in `dist/`.
 
 ## Tests
 

@@ -1,4 +1,5 @@
 import { config, collection, fields } from '@keystatic/core';
+import { TAGS } from './src/data/tags';
 
 // Local-mode CMS: editing happens via `astro dev` -> /keystatic, which reads and
 // writes the YAML data files in src/content/songs/. Production builds are static
@@ -24,10 +25,18 @@ export default config({
           label: 'Duration (ms)',
           description: 'Set automatically by the add-song CLI from the mp3.',
         }),
-        tags: fields.array(fields.text({ label: 'Tag' }), {
-          label: 'Tags',
-          itemLabel: (props) => props.value,
-        }),
+        // Array of searchable selects over the canonical tag list
+        // (src/data/tags.ts, via pnpm tags:gen) — pick from existing tags instead
+        // of free-typing, which prevents drift. Add a new tag with:
+        //   pnpm tags:gen acid.house bebop   (then restart dev)
+        tags: fields.array(
+          fields.select({
+            label: 'Tag',
+            options: TAGS.map((t) => ({ label: t, value: t })),
+            defaultValue: TAGS[0],
+          }),
+          { label: 'Tags', itemLabel: (props) => props.value },
+        ),
         hidden: fields.checkbox({
           label: 'Hidden',
           description: 'Build the page but exclude from the index and related lists.',
