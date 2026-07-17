@@ -28,6 +28,7 @@ const fullTitle = `Songs and Sounds by Travis Briggs${title ? ' - ' + title : ''
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title ?? 'Songs and Sounds by Travis Briggs'} />
     {description && <meta property="og:description" content={description} />}
+    <slot name="head" />
 
     {
       enableAnalytics && (

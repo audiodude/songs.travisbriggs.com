@@ -1,4 +1,5 @@
 ---
+import { existsSync } from 'node:fs';
 import { marked } from 'marked';
 import Base from '../layouts/Base.astro';
 import SongRow from '../components/SongRow.astro';
@@ -18,6 +19,20 @@ export async function getStaticPaths() {
 
 const { song, related, nb } = Astro.props;
 const noteHtml = song.note ? await marked.parse(song.note) : null;
+// Mastodon turns a `twitter:player` tag into a playable inline card (it
+// fabricates a video-type oEmbed from it); a formal oEmbed endpoint is not
+// needed and rich-type oEmbeds are rejected. Hidden songs have no audio in R2,
+// so they get no player tags.
+const embedUrl = new URL(`/embed/${song.slug}/`, Astro.site).href;
+// Per-track cover art (public/covers/<slug>.jpg). The path (not the built hash)
+// is checked because covers are static public assets copied verbatim into dist/.
+// `coverUrl` is null when there's no cover yet; social tags fall back to the
+// site image, and the play button falls back to solid blue.
+const coverUrl = existsSync(`public/covers/${song.slug}.jpg`) ? `/covers/${song.slug}.jpg` : null;
+// Only the per-track cover is ever used as the card image — never a stand-in.
+const ogImage = coverUrl ? new URL(coverUrl, Astro.site).href : null;
+// 1×1 transparent gif so the dev preview box is neutral before a cover exists.
+const blankPreview = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 const track = { slug: song.slug, title: song.title, src: song.src, tags: song.tags };
 const externals = [
   { label: 'travisbriggs.com ↗', href: SOCIAL.site },
@@ -27,6 +42,18 @@ const externals = [
 ---
 
 <Base title={song.title} description={song.note?.slice(0, 160) || `A song by Travis Briggs.`}>
+  <Fragment slot="head">
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {!song.hidden && (
+      <>
+        <meta name="twitter:card" content="player" />
+        <meta name="twitter:player" content={embedUrl} />
+        <meta name="twitter:player:width" content="400" />
+        <meta name="twitter:player:height" content="150" />
+        {ogImage && <meta name="twitter:image" content={ogImage} />}
+      </>
+    )}
+  </Fragment>
   <div
     class="card"
     style="max-width:var(--maxw); margin:40px auto 140px; background:var(--card); border-radius:var(--radius-card); box-shadow:0 16px 50px rgba(0,0,0,.4); overflow:hidden;"
@@ -64,13 +91,37 @@ const externals = [
         </span>
       </div>
 
-      <DetailPlayer client:load track={track} durationMs={song.duration} />
+      <DetailPlayer client:load track={track} durationMs={song.duration} coverUrl={coverUrl} />
 
       <div style="display:flex; align-items:center; gap:12px; margin-top:30px; flex-wrap:wrap;">
         <a href={song.src} download class="dl-btn" style="display:inline-flex; align-items:center; gap:8px; padding:11px 20px; border-radius:999px; font:600 13px/1 var(--font-body); color:#fff; text-decoration:none; background:var(--accent); transition:background .15s;">↓ Download MP3</a>
         <button type="button" data-copy-link class="copy-btn" style="display:inline-flex; align-items:center; gap:8px; padding:11px 18px; border-radius:999px; font:600 13px/1 var(--font-body); color:var(--accent-light); background:transparent; border:1px solid var(--accent); cursor:pointer; transition:color .15s,border-color .15s;">⧉ Copy link</button>
         <span style="margin-left:auto; font:400 11px/1 var(--font-mono); color:var(--faint); letter-spacing:.06em;">CC BY-SA 4.0</span>
       </div>
+
+      {import.meta.env.DEV && (
+        <div
+          data-cover-admin
+          data-slug={song.slug}
+          style="margin-top:28px; padding:16px 18px; border:1px dashed var(--border-strong); border-radius:8px; background:#161e2b;"
+        >
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+            <span style="font:700 10px/1 var(--font-mono); color:var(--accent-light); letter-spacing:.16em; text-transform:uppercase;">Cover · dev only</span>
+            <span style="font:400 11px/1 var(--font-mono); color:var(--faint);">fal.ai FLUX.2 → /covers/{song.slug}.jpg</span>
+          </div>
+          <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
+            <img data-cover-preview src={coverUrl ?? blankPreview} alt="current cover" width="112" height="112" style="width:112px; height:112px; border-radius:6px; object-fit:cover; background:var(--rest); flex:0 0 auto;" />
+            <div style="flex:1; min-width:240px;">
+              <textarea data-cover-prompt rows="3" placeholder="Describe the cover art you want…" style="width:100%; resize:vertical; padding:10px 12px; border-radius:6px; border:1px solid var(--border-strong); background:#0f1521; color:var(--text); font:400 14px/1.5 var(--font-body);"></textarea>
+              <div style="display:flex; align-items:center; gap:12px; margin-top:10px; flex-wrap:wrap;">
+                <button type="button" data-cover-generate style="padding:9px 16px; border-radius:999px; border:0; background:var(--accent); color:#fff; font:600 13px/1 var(--font-body); cursor:pointer;">Generate with fal.ai</button>
+                <span data-cover-spinner class="cover-spinner" hidden></span>
+                <span data-cover-status style="font:400 12px/1.4 var(--font-mono); color:var(--faint);"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
 
     <!-- note -->
@@ -129,6 +180,10 @@ const externals = [
 
   <script>
     import '../scripts/wire-play.ts';
+    // Dev-only cover generator client. `import.meta.env.DEV` is statically false
+    // in the production build, so this dynamic import is tree-shaken away and
+    // cover-admin.ts never enters dist/.
+    if (import.meta.env.DEV) import('../scripts/cover-admin.ts');
   </script>
 </Base>
 

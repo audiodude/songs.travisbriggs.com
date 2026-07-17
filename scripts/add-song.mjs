@@ -9,6 +9,7 @@ import path from 'node:path';
 import { parseFile } from 'music-metadata';
 import { parse, stringify } from 'yaml';
 import { generatePeaks } from './peaks.mjs';
+import { generateWaveformCover } from './covers.mjs';
 import { uploadToR2 } from './r2.mjs';
 
 function parseArgs(argv) {
@@ -67,6 +68,11 @@ async function main() {
   const peaks = await generatePeaks(mp3, 72);
   await writeFile(path.join('public/peaks', `${slug}.json`), JSON.stringify(peaks));
 
+  // Deterministic waveform cover from the fresh peaks. Skips slugs that already
+  // hold custom fal.ai art (tracked in ai-covers.json) so re-runs never clobber
+  // a hand-made cover.
+  const coverStatus = await generateWaveformCover(slug);
+
   // Idempotent: if the song already exists, preserve its metadata (title, date,
   // tags, hidden, note) and only refresh the duration. Explicit --title/--date
   // still override. New songs get a fresh scaffold.
@@ -95,6 +101,8 @@ async function main() {
   }
 
   console.log(`✓ ${existed ? 'updated' : 'added'} "${data.title}" [${slug}] — ${Math.round(duration / 1000)}s, ${peaks.length} peaks`);
+  if (coverStatus === 'written') console.log(`  🖼 wrote public/covers/${slug}.jpg`);
+  if (coverStatus === 'ai-skip') console.log('  🖼 kept existing fal.ai cover (in ai-covers.json)');
   if (existed) console.log('  (existing note/tags/date preserved)');
   console.log('  next: pnpm dev → http://localhost:4321/keystatic/ to write the note + tags');
 }

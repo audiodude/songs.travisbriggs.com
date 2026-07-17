@@ -9,9 +9,11 @@ interface Props {
   track: Track;
   /** fallback duration (ms) shown before this track has been loaded into the player */
   durationMs: number;
+  /** cover art shown behind the play button (null → solid accent) */
+  coverUrl?: string | null;
 }
 
-export default function DetailPlayer({ track, durationMs }: Props) {
+export default function DetailPlayer({ track, durationMs, coverUrl }: Props) {
   const current = useStore($current);
   const isPlaying = useStore($isPlaying);
   const time = useStore($time);
@@ -49,7 +51,11 @@ export default function DetailPlayer({ track, durationMs }: Props) {
           height: 74,
           flex: '0 0 74px',
           borderRadius: '50%',
-          background: 'var(--accent)',
+          // Song art behind a translucent accent wash, so the cover shows
+          // through the button while it still reads as the blue play control.
+          background: coverUrl
+            ? `linear-gradient(rgba(59,130,246,0.5), rgba(59,130,246,0.5)), url(${JSON.stringify(coverUrl)}) center / cover`
+            : 'var(--accent)',
           border: 'none',
           cursor: 'pointer',
           display: 'flex',

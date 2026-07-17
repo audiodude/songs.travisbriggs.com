@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import keystatic from '@keystatic/astro';
+import coverAdmin from './integrations/cover-admin.mjs';
 
 // Keystatic's admin UI runs only under `astro dev`. For the production static
 // build we omit the integration entirely so `dist/` stays 100% static (no admin
@@ -18,5 +19,7 @@ export default defineConfig({
   // The Astro dev toolbar floats bottom-center and collides with our fixed
   // player bar; it's dev-only noise here. Re-enable by removing this if wanted.
   devToolbar: { enabled: false },
-  integrations: [react(), ...(dev ? [keystatic()] : [])],
+  // cover-admin mounts the dev-only fal.ai endpoint; like keystatic it is left
+  // out of the production build so dist/ stays 100% static (no endpoint, no key).
+  integrations: [react(), ...(dev ? [keystatic(), coverAdmin()] : [])],
 });

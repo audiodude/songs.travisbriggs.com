@@ -13,7 +13,8 @@
     "check-assets": "node scripts/check-assets.mjs",
     "recalc-durations": "node scripts/recalc-durations.mjs",
     "tag-tool": "node scripts/tag-tool.mjs",
-    "tags:gen": "node scripts/gen-tags.mjs"
+    "tags:gen": "node scripts/gen-tags.mjs",
+    "covers:gen": "node scripts/gen-covers.mjs"
   },
   "keywords": [],
   "author": "",
@@ -39,9 +40,11 @@
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.1075.0",
+    "@fal-ai/client": "^1.10.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "music-metadata": "^11.13.0",
+    "sharp": "^0.35.3",
     "typescript": "^6.0.3",
     "vitest": "^4.1.9",
     "wrangler": "^4.105.0",
