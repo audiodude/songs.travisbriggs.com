@@ -5,7 +5,7 @@ import Base from '../layouts/Base.astro';
 import SongRow from '../components/SongRow.astro';
 import DetailPlayer from '../components/DetailPlayer.tsx';
 import { loadSongs, relatedByTag, neighbors } from '../lib/songs';
-import { fmtLongDate, fmtDuration } from '../lib/format';
+import { fmtLongDate, fmtDuration, metaDescription } from '../lib/format';
 import { SOCIAL } from '../lib/site';
 
 export async function getStaticPaths() {
@@ -41,7 +41,7 @@ const externals = [
 ];
 ---
 
-<Base title={song.title} description={song.note?.slice(0, 160) || `A song by Travis Briggs.`}>
+<Base title={song.title} description={song.note ? metaDescription(song.note) : `A song by Travis Briggs.`}>
   <Fragment slot="head">
     {ogImage && <meta property="og:image" content={ogImage} />}
     {!song.hidden && (
