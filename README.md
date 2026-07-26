@@ -31,6 +31,10 @@ Node **22.x** (pinned via `.tool-versions` / `.nvmrc`), pnpm.
   Covers are the `og:image` / `twitter:image` on song pages and the thumbnail in the
   `/embed/<slug>/` player card.
 - The **mp3 files are never in git** (`*.mp3` is gitignored) — they live in R2.
+- The full catalog is also served as JSON at **`/songs.json`** (built by
+  `src/pages/songs.json.ts`): `[{slug, title, date, duration, tags, src, url,
+cover}]` for every visible song, CORS-open (`Access-Control-Allow-Origin: *`)
+  so other travisbriggs.com properties can fetch it from the browser.
 - One `<audio>` element lives in a `transition:persist` React island, so playback
   continues uninterrupted as you navigate between the index and song pages.
 - Song pages emit **`twitter:player` + OpenGraph tags** pointing at a minimal
