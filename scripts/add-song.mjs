@@ -1,10 +1,12 @@
-// CLI to ingest a new song: upload the mp3 to R2, read its duration, generate
-// waveform peaks, and scaffold the content file. Then edit notes/tags/date in
-// the Keystatic admin (pnpm dev -> /keystatic/).
+// CLI to ingest MP3 or WAV audio (WAV is converted to 320 kbps MP3): upload to R2,
+// read its duration, generate waveform peaks, and scaffold the content file.
+// Then edit notes/tags/date in the Keystatic admin (pnpm dev -> /keystatic/).
 //
 // Usage:
-//   pnpm add-song <file.mp3> [--slug s] [--title t] [--date YYYY-MM-DD] [--no-upload]
-import { access, mkdir, readFile, writeFile } from 'node:fs/promises';
+//   pnpm add-song <file.mp3|file.wav> [--slug s] [--title t] [--date YYYY-MM-DD] [--no-upload]
+import { spawnSync } from 'node:child_process';
+import { access, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { parseFile } from 'music-metadata';
 import { parse, stringify } from 'yaml';
@@ -46,65 +48,84 @@ async function fileExists(p) {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
-  const mp3 = args._[0];
-  if (!mp3) {
-    console.error('Usage: pnpm add-song <file.mp3> [--slug s] [--title t] [--date YYYY-MM-DD] [--no-upload]');
+  const input = args._[0];
+  if (!input) {
+    console.error('Usage: pnpm add-song <file.mp3|file.wav> [--slug s] [--title t] [--date YYYY-MM-DD] [--no-upload]');
     process.exit(1);
   }
-  if (!(await fileExists(mp3))) {
-    console.error(`File not found: ${mp3}`);
+  if (!(await fileExists(input))) {
+    console.error(`File not found: ${input}`);
     process.exit(1);
   }
 
-  const base = path.basename(mp3);
+  const base = path.basename(input);
   const slug = args.slug ? slugify(args.slug) : slugify(base);
   const title = args.title ?? titleize(base);
   const date = args.date ?? new Date().toISOString().slice(0, 10);
 
-  const meta = await parseFile(mp3);
-  const duration = Math.round((meta.format.duration || 0) * 1000);
+  let meta = await parseFile(input);
+  let mp3 = input;
+  let tempDir;
+  try {
+    if (meta.format.container === 'WAVE') {
+      tempDir = await mkdtemp(path.join(tmpdir(), 'add-song-'));
+      mp3 = path.join(tempDir, 'audio.mp3');
+      // MPEG-1 sample rate allows 320 kbps even for low-rate WAV inputs.
+      const result = spawnSync('ffmpeg', [
+        '-nostdin', '-v', 'error', '-i', path.resolve(input),
+        '-vn', '-codec:a', 'libmp3lame', '-ar', '44100', '-b:a', '320k', mp3,
+      ], { stdio: 'inherit' });
+      if (result.error) throw result.error;
+      if (result.status !== 0) throw new Error('ffmpeg WAV-to-MP3 conversion failed');
+      meta = await parseFile(mp3);
+      console.log('• converted WAV to 320 kbps MP3');
+    }
+    const duration = Math.round((meta.format.duration || 0) * 1000);
 
-  await mkdir('public/peaks', { recursive: true });
-  const peaks = await generatePeaks(mp3, 72);
-  await writeFile(path.join('public/peaks', `${slug}.json`), JSON.stringify(peaks));
+    await mkdir('public/peaks', { recursive: true });
+    const peaks = await generatePeaks(mp3, 72);
+    await writeFile(path.join('public/peaks', `${slug}.json`), JSON.stringify(peaks));
 
-  // Deterministic waveform cover from the fresh peaks. Skips slugs that already
-  // hold custom fal.ai art (tracked in ai-covers.json) so re-runs never clobber
-  // a hand-made cover.
-  const coverStatus = await generateWaveformCover(slug);
+    // Deterministic waveform cover from the fresh peaks. Skips slugs that already
+    // hold custom fal.ai art (tracked in ai-covers.json) so re-runs never clobber
+    // a hand-made cover.
+    const coverStatus = await generateWaveformCover(slug);
 
-  // Idempotent: if the song already exists, preserve its metadata (title, date,
-  // tags, hidden, note) and only refresh the duration. Explicit --title/--date
-  // still override. New songs get a fresh scaffold.
-  await mkdir('src/content/songs', { recursive: true });
-  const yamlPath = path.join('src/content/songs', `${slug}.yaml`);
-  const existed = await fileExists(yamlPath);
-  let data;
-  if (existed) {
-    data = parse(await readFile(yamlPath, 'utf8')) || {};
-    data.duration = duration;
-    if (args.title) data.title = title;
-    if (args.date) data.date = date;
-    data.tags ??= [];
-    data.hidden ??= false;
-    data.note ??= '';
-  } else {
-    data = { title, date, duration, tags: [], hidden: false, note: '' };
+    // Idempotent: if the song already exists, preserve its metadata (title, date,
+    // tags, hidden, note) and only refresh the duration. Explicit --title/--date
+    // still override. New songs get a fresh scaffold.
+    await mkdir('src/content/songs', { recursive: true });
+    const yamlPath = path.join('src/content/songs', `${slug}.yaml`);
+    const existed = await fileExists(yamlPath);
+    let data;
+    if (existed) {
+      data = parse(await readFile(yamlPath, 'utf8')) || {};
+      data.duration = duration;
+      if (args.title) data.title = title;
+      if (args.date) data.date = date;
+      data.tags ??= [];
+      data.hidden ??= false;
+      data.note ??= '';
+    } else {
+      data = { title, date, duration, tags: [], hidden: false, note: '' };
+    }
+    await writeFile(yamlPath, stringify(data));
+
+    if (args.noUpload) {
+      console.log('• skipped R2 upload (--no-upload)');
+    } else {
+      await uploadToR2(mp3, `${slug}.mp3`);
+      console.log(`↑ uploaded ${slug}.mp3 to R2`);
+    }
+
+    console.log(`✓ ${existed ? 'updated' : 'added'} "${data.title}" [${slug}] — ${Math.round(duration / 1000)}s, ${peaks.length} peaks`);
+    if (coverStatus === 'written') console.log(`  🖼 wrote public/covers/${slug}.jpg`);
+    if (coverStatus === 'ai-skip') console.log('  🖼 kept existing fal.ai cover (in ai-covers.json)');
+    if (existed) console.log('  (existing note/tags/date preserved)');
+    console.log('  next: pnpm dev → http://localhost:4321/keystatic/ to write the note + tags');
+  } finally {
+    if (tempDir) await rm(tempDir, { recursive: true, force: true });
   }
-  await writeFile(yamlPath, stringify(data));
-
-  if (args.noUpload) {
-    console.log('• skipped R2 upload (--no-upload)');
-  } else {
-    await uploadToR2(mp3, `${slug}.mp3`);
-    console.log(`↑ uploaded ${slug}.mp3 to R2`);
-  }
-
-  console.log(`✓ ${existed ? 'updated' : 'added'} "${data.title}" [${slug}] — ${Math.round(duration / 1000)}s, ${peaks.length} peaks`);
-  if (coverStatus === 'written') console.log(`  🖼 wrote public/covers/${slug}.jpg`);
-  if (coverStatus === 'ai-skip') console.log('  🖼 kept existing fal.ai cover (in ai-covers.json)');
-  if (existed) console.log('  (existing note/tags/date preserved)');
-  console.log('  next: pnpm dev → http://localhost:4321/keystatic/ to write the note + tags');
 }
 
 main().catch((e) => {

@@ -64,12 +64,18 @@ pnpm dev          # http://localhost:4321
 
 ```bash
 pnpm add-song path/to/track.mp3 [--slug my-slug] [--title "My Title"] [--date YYYY-MM-DD]
+pnpm add-song path/to/track.wav [--slug my-slug] [--title "My Title"] [--date YYYY-MM-DD]
 ```
 
-This uploads the mp3 to R2, reads its duration, generates the waveform peaks, renders
-the waveform **cover** (`public/covers/<slug>.jpg`), and scaffolds
-`src/content/songs/<slug>.yaml`. Then open `/keystatic/` to write the note and tags.
-(`--no-upload` skips R2 for offline scaffolding.)
+Accepts MP3 or WAV audio. WAV input is detected from its audio format and converted
+with `ffmpeg` to **320 kbps CBR MP3 at 44.1 kHz** before ingestion. The original WAV
+is untouched, and the temporary MP3 is removed on success or failure. Existing MP3
+inputs are uploaded unchanged.
+
+This reads the MP3 duration, generates the waveform peaks, renders the waveform
+**cover** (`public/covers/<slug>.jpg`), scaffolds `src/content/songs/<slug>.yaml`,
+and uploads the MP3 to R2. Then open `/keystatic/` to write the note and tags.
+(`--no-upload` skips R2 for offline scaffolding, but still converts WAV input.)
 
 The upload uses your Cloudflare token (`CF_API_TOKEN` from `~/.secrets`, or `.env`) via
 wrangler — no separate R2 key. Copy `.env.example` → `.env` for the bucket/account config.
